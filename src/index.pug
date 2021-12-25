@@ -23,7 +23,7 @@ html(lang="en")
                       li.menu__item
                         a.menu__link #{item}
               .header__links
-                -var icons = ['insta','vk','github']
+                -var icons = ['insta','vk','github'];
                 ul.socials
                   each item in icons
                     li.socials__item
@@ -31,7 +31,7 @@ html(lang="en")
                         +icon(item, "socials__icon")
             .hero__content 
               .user-data
-                .user-data__desc Личный сайт <br> веб разработчика
+                .user-data__desc Личный сайт <br> веб-разработчика
                 .user-data__name Владимир <br>   &nbspАстаханов
             a(href="#").hero__bottom-btn.scroll-down-btn Скролл
               +icon('scroll', "scroll-down-btn__icon")
@@ -69,16 +69,15 @@ html(lang="en")
           svg(viewBox="0 0 1000 100" preserveAspectRatio="none").trinagles__item.triangle
             polygon(points="1000,0 1000,100 0,100")
         .values__title 
-          .values__title-content
-            .longtitle
-              h2.longtitle__text Чем я могу быть полезен вам
-              p.longtitle__decs Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
+          .longtitle
+            h2.longtitle__text Чем я могу быть полезен вам
+            p.longtitle__decs Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
         .values__content
           -
             var items = [
-              ["Front-end", ["HTML5","CSS3", "Javascript","jquery и Vue.js"]],
+              ["Front-end", ["HTML5","CSS3", "Javascript","jQuery и Vue.js"]],
               ["Workflow", ["GIT","Terminal", "Gulp","Webpack"]]
-            ]
+            ];
           ul.skills-list 
             each row in items 
               li.skills-list__item.skills-row
@@ -90,6 +89,40 @@ html(lang="en")
                         .skill__circle
                         .skill__circle
                         .skill__title= cell 
+      section.mywork
+        .container
+          h2.section__title.section__title-black Мои работы
+      section.contacts
+        .container
+          .reviews
+            h2.section__title Что обо мне говорят
+            .reviews__content
+          .contacts__form
+            .form
+              .form__title
+                h2.form__title-text.section__title Связаться со мной
+              form.form__element
+                .form__row
+                  label.form-block
+                    .form-block__title Введите ваше имя
+                    .form-block__field
+                      +icon('user','form-block__icon')
+                      input(type="text" placeholder="Илон Маск").form-block__input
+                  label.form-block
+                    .form-block__title Введите ваш email
+                    .form-block__field
+                      +icon('envelope','form-block__icon')
+                      input(type="text" placeholder="ilon_mask@gmail.com").form-block__input
+                .form__row.form__row-long
+                  label.form-block
+                    .form-block__title Сообщение к письму
+                    .form-block__field
+                      +icon('message','form-block__icon')
+                      textarea(placeholder="Требуется ваша помощь в создании сайта. Интересуют сроки и цена вопроса").form-block__input.form-block__textarea
+                      
+                .form__row
+                  input(type="submit" value="Отправить").form__submit
+
       footer.footer
         .container.footer__container
           .footer__copyright
@@ -97,7 +130,7 @@ html(lang="en")
               .footer__copyright-year © 2019
             .footer__copyright-userinfo
               .footer__copyright-name Павел <br> Сысоев
-              .footer__copyright-desc Личный сайт <br> веб разработчика
+              .footer__copyright-desc Личный сайт <br> веб-разработчика
           .footer__data
             nav.menu.footer__data-menu
               - var items = ['Главная', 'Обо мне',' Навыки','Работы','Отзывы','Связаться'];
@@ -110,7 +143,7 @@ html(lang="en")
                 .footer__content-right-text
                   p Этот сайт я сделал в рамках обучения
                 .footer__social.social
-                  -var icons = ['insta','vk','github']
+                  -var icons = ['insta','vk','github'];
                     ul.socials
                       each item in icons
                         li.socials__item
@@ -120,4 +153,3 @@ html(lang="en")
                 .footer__content-left-text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
                 .footer__content-left-autor Martin Golding
 
-                

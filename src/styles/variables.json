@@ -1,5 +1,6 @@
 {
   "text-color": "#ffffff",
+  "text-opacity": "rgba(255, 255, 255, 0.3)",
   "links-color": "#586ed3",
   "errors-color": "#cd1515",
   "bp-desktop-hd": "1800px",
