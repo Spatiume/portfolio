@@ -1,0 +1,48 @@
+.review {
+  padding-left: 92px;
+
+  color: rgba($text-color, .6);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.88;
+
+  &&::before {
+    content: "";  
+    position: absolute;
+    top:0;
+    left:0;
+    display: block;
+    width: 69px;
+    height: 69px;
+    background: svg-load('quote.svg', fill=#f9f9f9) center center/cover no-repeat;
+    opacity: 0.05;
+  }
+}
+
+.review__text {
+  margin-bottom: 32px;
+}
+
+.review__user {
+  display: flex;
+  align-items: center;
+}
+
+.review__user-pic {
+  height: 75px;
+  width: 75px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-right: 7%;
+}
+
+.review__user-pic-full {
+  display: block;
+  width: 100%;
+}
+
+.review__user-name {
+  font-size: 18px;
+  color: rgba($text-color, 1);
+}

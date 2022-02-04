@@ -1,0 +1,76 @@
+.parallax {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  // height: 100%;
+}
+
+.parallax__layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // width: 100%;
+  // height: 100%;
+  will-change: translate;
+
+  .parallax__image {
+    position: absolute;
+    object-fit: cover;
+    // left: -88px;
+    // max-width: 114%;
+    width: 100%;
+    height: 40%;
+    max-width: none;
+    max-height: none;
+    // display: none;
+  }
+
+  &:nth-child(1) {
+    .parallax__image {
+      top: 0;
+      height: 42%;
+    }
+  }
+
+  &:nth-child(2) {
+    .parallax__image {
+      top: 298px;
+      height: 38%;
+    }
+  }
+
+  &:nth-child(3) {
+    .parallax__image {
+      top: 396px;
+      height: 40%;
+    }
+  }
+
+  &:nth-child(4) {
+    .parallax__image {
+      bottom: -472px;
+      height: 80%;
+      display: block;
+    }
+  }
+
+  &:nth-child(5) {
+    .parallax__image {
+      bottom: 0px;
+    }
+  }
+
+
+  &:nth-child(6) {
+    .parallax__image {
+      bottom: 0;
+    }
+  }
+
+
+}

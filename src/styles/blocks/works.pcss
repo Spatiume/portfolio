@@ -1,0 +1,30 @@
+.works {
+  // height: 788px;
+  border: 1px solid blue;
+  padding: 140px 0;
+  background: white;
+}
+
+.works__container {
+  @include phones {
+    width: 100%;
+  }
+}
+
+.works__section-title {
+  margin-bottom: 62px;
+
+  @include phones {
+    text-align: center;
+    margin-bottom: 30px;
+  } 
+}
+
+.works__content {
+  color: #353e4f;
+  padding-bottom: 60px;
+
+  @include phones {
+    padding-bottom: 0px;
+  }
+}

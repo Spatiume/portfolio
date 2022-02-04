@@ -1,7 +1,7 @@
 include ./mixins.pug
 
 <!DOCTYPE html>
-html(lang="en")
+html(lang="ru")
   head
     meta(charset="UTF-8")
     meta(name="viewport" content="width=device-width, initial-scale=1.0")
@@ -10,11 +10,16 @@ html(lang="en")
   body
     .wrapper
       .welcome-section
+        section.parallax
+          - for (var i = 1; i <= 6; i++)
+            .parallax__layer(data-speed=`${i<6? i/100*9: ''}`)
+              +image(`parallax/${i}.png`,"parallax__image")
+
         section.hero
           .container.hero__container
             header.header
               .header__logo
-                .logo ВА
+                .logo П.С.
               .header__btns
                 nav.menu
                   -var items = ['Главная', 'Обо мне',' Навыки','Работы','Отзывы','Связаться'];
@@ -27,76 +32,69 @@ html(lang="en")
                 ul.socials
                   each item in icons
                     li.socials__item
-                      a(href="").socials__link
+                      a(href="" target="_blank").socials__link
                         +icon(item, "socials__icon")
             .hero__content 
               .user-data
                 .user-data__desc Личный сайт <br> веб-разработчика
-                .user-data__name Владимир <br>   &nbspАстаханов
+                .user-data__name Павел <br>   &nbspСысоев
             a(href="#").hero__bottom-btn.scroll-down-btn Скролл
               +icon('scroll', "scroll-down-btn__icon")
-        section.about
-          .container
-            .about-info 
-              .about__user-data
-                .user-info
-                  .user-info__avatar
-                    .avatar
-                      +image("content/user.jpg","avatar__img","avatar__img")
-                  .user-info__content
-                    -
-                      var userdata=[
-                        ["Проживаю","Санкт-Петербург"],
-                        ["Возраст", "25 лет"],
-                        ["Родился", "20 ноября 1996"]
-                      ];
-                    table.user-info__table
-                      each row in userdata 
-                        tr
-                          td.user-info__table-title #{row[0]}
-                          td #{row[1]}
-              .about__content
-                .about__disclamer Привет, меня зовут
-                h2.about__title Павел Сысоев
-                .about__desc
-                  p Я занимаюсь разработкой современных сайтов и приложений. Мне нравится делать интересные и современные проекты.
-                .about__ps
-                  p Этот сайт я сделал в рамках обучения. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!                  
-      section.values 
-        section.triangles.values__triangles
+        section.triangles.welcome-section__triangles
           svg(viewBox="0 0 1000 100" preserveAspectRatio="none").trinagles__item.triangle
             polygon(points="0,0 0,100 1000,100")
           svg(viewBox="0 0 1000 100" preserveAspectRatio="none").trinagles__item.triangle
             polygon(points="1000,0 1000,100 0,100")
-        .values__title 
-          .longtitle
-            h2.longtitle__text Чем я могу быть полезен вам
-            p.longtitle__decs Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
-        .values__content
-          -
-            var items = [
-              ["Front-end", ["HTML5","CSS3", "Javascript","jQuery и Vue.js"]],
-              ["Workflow", ["GIT","Terminal", "Gulp","Webpack"]]
-            ];
-          ul.skills-list 
-            each row in items 
-              li.skills-list__item.skills-row
-                .skills-row__title #{row[0]}
-                ul.skills-row__list
-                  each cell in row[1] 
-                    li.skills-row__item
-                      .skill
-                        .skill__circle
-                        .skill__circle
-                        .skill__title= cell 
-      section.mywork
+      section.about
         .container
-          h2.section__title.section__title-black Мои работы
+          .about-info 
+            .about__user-data
+              .user-info
+                .user-info__avatar
+                  .avatar
+                    +image("content/user.jpg","avatar__img","avatar__img")
+                .user-info__content
+                  -
+                    var userdata=[
+                      ["Проживаю","Санкт-Петербург"],
+                      ["Возраст", "25 лет"],
+                      ["Родился", "20 ноября 1996"]
+                    ];
+                  table.user-info__table
+                    each row in userdata 
+                      tr
+                        td.user-info__table-title #{row[0]}
+                        td #{row[1]}
+            .about__content
+              .about__disclamer Привет, меня зовут
+              h2.about__title Павел Сысоев
+              .about__desc
+                p Я занимаюсь разработкой современных сайтов и приложений. Мне нравится делать интересные и современные проекты.
+              .about__ps
+                p Этот сайт я сделал в рамках обучения. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!                  
+      section.values 
+        .container.values__container
+          .values__title 
+            .longtitle
+              h2.longtitle__text Чем я могу быть полезен вам
+              p.longtitle__decs Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
+          .values__widget
+            #skills-component 
+
+      section.works
+        .container.works__container
+          h2.section__title.section__title-black.works__section-title Мои работы
+          .works__content
+            #slider-component
       section.contacts
         .container
-          .reviews
-            h2.section__title Что обо мне говорят
-            .reviews__content
+          .reviews-section
+            h2.section__title.reviews-section__title Что обо мне говорят
+            .reviews-section__content
+              #reviews-slider-component
+
+
+
           .contacts__form
             .form
               .form__title
@@ -119,7 +117,7 @@ html(lang="en")
                     .form-block__field
                       +icon('message','form-block__icon')
                       textarea(placeholder="Требуется ваша помощь в создании сайта. Интересуют сроки и цена вопроса").form-block__input.form-block__textarea
-                      
+
                 .form__row
                   input(type="submit" value="Отправить").form__submit
 
@@ -127,7 +125,7 @@ html(lang="en")
         .container.footer__container
           .footer__copyright
             .footer__copyright-col
-              .footer__copyright-year © 2019
+              .footer__copyright-year © 2022
             .footer__copyright-userinfo
               .footer__copyright-name Павел <br> Сысоев
               .footer__copyright-desc Личный сайт <br> веб-разработчика
@@ -147,9 +145,10 @@ html(lang="en")
                     ul.socials
                       each item in icons
                         li.socials__item
-                          a(href="").socials__link
+                          a(href="" target="_blank").socials__link
                             +icon(item, "socials__icon")
               .footer__content-left
                 .footer__content-left-text Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
                 .footer__content-left-autor Martin Golding
 
+    include ./templates/entry.pug

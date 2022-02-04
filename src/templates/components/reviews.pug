@@ -1,0 +1,40 @@
+script(type="text/x-tamplate")#reviews-slider
+  .reviews-slider
+    btns(
+      @handleSlide="handleSlide"
+      :currentIndex="currentIndex"
+      :maxCurrentIndex="maxCurrentIndex"
+    )
+    reviews(
+      :currentReview="currentReview"
+    )
+
+script(type="text/x-tamplate")#reviews-slider__btns
+
+  .reviews-slider__btns
+    a.reviews-slider__btn.reviews-slider__btn-left(
+      @click.prevent="$emit('handleSlide', 'left')" 
+      :class="{'reviews-slider__btn-noactive': currentIndex-1 < 0}"
+      ) 
+    a.reviews-slider__btn.reviews-slider__btn-right(
+      @click.prevent="$emit('handleSlide', 'right')" 
+      :class="{'reviews-slider__btn-noactive': currentIndex>= maxCurrentIndex}"
+      ) 
+
+script(type="text/x-tamplate")#reviews
+  ul.reviews-slider__list
+    li.reviews-slider__item(v-for="review in currentReview")
+      review(
+      :review="review"
+    )
+
+
+script(type="text/x-tamplate")#review
+  .review
+    p.review__text {{review.text}}
+    .review__user
+      .review__user-pic
+        img(:src="review.authorPic").review__user-pic-fullalt
+      .review__user-info
+        .review__user-name {{review.authorName}}
+        .review__user-position {{review.authorPos}}

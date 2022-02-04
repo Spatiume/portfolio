@@ -1,21 +1,30 @@
 .values{
   position: relative;
+  background: url(./../images/bg/values.png) center center/cover no-repeat;
+  min-height: 100vh;
 }
 
-.values__triangles{
-  position: absolute;
-  bottom: 100%;
-  right: 0;
-  left: 0;
+.values__container{
+
+  &::before{
+    content: '';
+    display: block;
+    position: absolute;
+    background: url(./../images/bg/heands.png) center center/contain no-repeat;
+    height: 78%;
+    width: 40%;
+    top: 29%;
+    left: -7%;
+  }
 }
 
 .values__title{
-  padding: 12% 23% 0% 28%;
+  padding: 41px 20% 0 25.5%;
   margin-bottom: 83px;
 }
 
-.values__content{
+.values__widget{
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 96px;
+  padding-bottom: 96px;
 }
