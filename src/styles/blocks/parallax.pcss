@@ -1,11 +1,13 @@
 .parallax {
   position: absolute;
   top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
-  bottom: 0;
-  overflow: hidden;
-  // height: 100%;
+
+
+
+
 }
 
 .parallax__layer {
@@ -14,63 +16,93 @@
   left: 0;
   right: 0;
   bottom: 0;
-  // width: 100%;
-  // height: 100%;
-  will-change: translate;
-
-  .parallax__image {
-    position: absolute;
-    object-fit: cover;
-    // left: -88px;
-    // max-width: 114%;
-    width: 100%;
-    height: 40%;
-    max-width: none;
-    max-height: none;
-    // display: none;
-  }
+  display: none;
+  will-change: transform;
 
   &:nth-child(1) {
+    display: block;
+
     .parallax__image {
-      top: 0;
-      height: 42%;
+      height: 40%;
+      object-fit: cover;
+
     }
   }
 
   &:nth-child(2) {
+    // transform: translateZ(-50px) scale(1.5);
+    display: block;
+
     .parallax__image {
-      top: 298px;
-      height: 38%;
+      top: 22%;
+      right: 0;
+      width: 120%;
+      object-fit: cover;
+
+      // width: 100%;
     }
   }
 
   &:nth-child(3) {
+    // transform: translateZ(-100px) scale(2);
+    display: block;
+
     .parallax__image {
-      top: 396px;
-      height: 40%;
+      right: 0%;
+      top: 24.5%;
+      width: 120%;
+      height: 65%;
+      object-fit: cover;
+
     }
   }
 
   &:nth-child(4) {
+    // transform: translateZ(-150px) scale(2.5);
+    display: block;
+
     .parallax__image {
-      bottom: -472px;
-      height: 80%;
-      display: block;
+      left: 0;
+      // width: 100%;
+      bottom: -45%;
+      height: 75%;
+      object-fit: cover;
+
     }
   }
 
   &:nth-child(5) {
+    // transform: translateZ(-200px) scale(3);
+    display: block;
+
     .parallax__image {
-      bottom: 0px;
+      left: 0;
+      bottom: -65%;
+      height: 100%;
+
     }
   }
-
 
   &:nth-child(6) {
+    display: block;
+
+    // transform: translateZ(-250px) scale(3.5) ;
     .parallax__image {
+      right: 0;
       bottom: 0;
+      // top: 416px;
+      width: 100%;
+      height: 50%;
+
     }
   }
 
+}
 
+.parallax__image {
+  max-width: initial;
+  max-height: initial;
+  position: absolute;
+  height: 50%;
+  width: 100%;
 }

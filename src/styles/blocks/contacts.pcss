@@ -1,6 +1,23 @@
 .contacts {
   padding-bottom: 130px;
-  border: 1px solid white;
   background: url(./../images/bg/contacts.png) center center/cover no-repeat;
+  position: relative;
 
+}
+
+.contacns__container {
+  padding-top: 10%;
+  padding-right: 20%;
+
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    background: url(./../images/bg/leaves.png) center center/contain no-repeat;
+    height: 100%;
+    width: 30%;
+    top: -20%;
+    right: 0;
+  }
 }

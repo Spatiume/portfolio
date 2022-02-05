@@ -13,7 +13,10 @@ html(lang="ru")
         section.parallax
           - for (var i = 1; i <= 6; i++)
             .parallax__layer(data-speed=`${i<6? i/100*9: ''}`)
-              +image(`parallax/${i}.png`,"parallax__image")
+              picture
+                source(srcset=require(`images/parallax/${i}_2560.png`).default media="(min-width: 1920px)").parallax__image
+                img(srcset=require(`images/parallax/${i}.png`).default).parallax__image
+
 
         section.hero
           .container.hero__container
@@ -87,7 +90,7 @@ html(lang="ru")
           .works__content
             #slider-component
       section.contacts
-        .container
+        .container.contacns__container
           .reviews-section
             h2.section__title.reviews-section__title Что обо мне говорят
             .reviews-section__content
@@ -152,3 +155,8 @@ html(lang="ru")
                 .footer__content-left-autor Martin Golding
 
     include ./templates/entry.pug
+
+          //-   section.parallax
+          //- - for (var i = 1; i <= 6; i++)
+          //-   .parallax__layer(data-speed=`${i<5? i/100*9: ''}`)
+          //-     +image(`parallax/${i}.png`,"parallax__image")
