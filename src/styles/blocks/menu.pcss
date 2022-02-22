@@ -1,10 +1,5 @@
 .menu__list{
   display: flex;
-
-}
-
-.menu__list{
-  display: flex;
   flex: 1;
   justify-content: space-between;
 }
@@ -15,4 +10,31 @@
   &:last-child{
     margin-right: 0;
   }
+}
+
+.menu__link{
+  white-space: nowrap;
+}
+
+.menu--vertical{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+    .menu__list{
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .menu__item {
+      padding: 10%;
+      margin: 0;
+    }
+
+    .menu__link{
+      text-align: center;
+
+    }
 }

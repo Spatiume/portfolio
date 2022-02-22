@@ -1,27 +1,38 @@
-.hero__bottom-btn{
+.hero__bottom-btn {
   position: absolute;
   bottom: 2%;
   left: 51.8%;
   transform: translateX(-50%);
 }
 
-.hero{
+.hero {
   height: 100vh;
   position: relative;
   min-height: 650px;
-  margin-bottom: 150px;
+  margin-bottom: 410px;
+
+  @include tablets {
+    margin-bottom: 0;
+  }
 }
 
-.hero__container{
+.hero__container {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
 
-.hero__content{
+.hero__content {
   display: flex;
   align-items: center;
   justify-content: center;
   flex: 1;
   padding-bottom: 6%;
+
+
+
+  @include tablets {
+    align-items: flex-start;
+    padding-top: 13vh;
+  }
 }

@@ -1,5 +1,6 @@
 import Vue from "vue";
 
+const screenWidth = window.screen.width;
 
 const btns = {
   template: "#reviews-slider__btns",
@@ -36,17 +37,26 @@ new Vue({
   },
 
   computed: {
-    currentReviewLeft() {
+    currentReviewFirst() {
       return this.reviewsData[this.currentIndex];
     },
-    currentReviewRight() {
+    currentReviewSecond() {
       return this.reviewsData[this.currentIndex + 1];
     },
     currentReview() {
-      return [this.currentReviewLeft, this.currentReviewRight];
+      if (screenWidth>480){
+        return [this.currentReviewFirst, this.currentReviewSecond];
+      } else{
+        return [this.currentReviewFirst];
+      }
     },
     maxCurrentIndex(){
-      return this.reviewsData.length-2;
+      if (screenWidth>480){
+        return this.reviewsData.length-2;
+      } else {
+        return this.reviewsData.length-1;
+      }
+      
     }
   },
   watch: {
@@ -56,9 +66,9 @@ new Vue({
   },
   methods: {
     allowSliderToWork(value) {
-      const reviewAmountFromZero = this.reviewsData.length - 2;
-      if (value > reviewAmountFromZero) {
-        this.currentIndex = reviewAmountFromZero;
+      // const reviewAmountFromZero = this.reviewsData.length - 2;
+      if (value > this.maxCurrentIndex) {
+        this.currentIndex = this.maxCurrentIndex;
       }
       if (value < 0) {
         this.currentIndex = 0;

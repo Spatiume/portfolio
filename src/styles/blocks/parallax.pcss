@@ -5,8 +5,9 @@
   left: 0;
   right: 0;
 
-
-
+  @include tablets {
+    display: none;
+  }
 
 }
 
@@ -23,7 +24,8 @@
     display: block;
 
     .parallax__image {
-      height: 40%;
+      height: 38.6%;
+      min-height: 33vmax;
       object-fit: cover;
 
     }
@@ -34,9 +36,12 @@
     display: block;
 
     .parallax__image {
-      top: 22%;
+      top: 25.6%;
       right: 0;
-      width: 120%;
+      width: 100%;
+      // height: 45%;
+      min-height: 35%;
+
       object-fit: cover;
 
       // width: 100%;
@@ -48,10 +53,12 @@
     display: block;
 
     .parallax__image {
-      right: 0%;
-      top: 24.5%;
-      width: 120%;
-      height: 65%;
+      right: 0;
+      top: 34%;
+      width: 101%;
+      min-height: 37%;
+      // height: 48%;
+
       object-fit: cover;
 
     }
@@ -64,9 +71,9 @@
     .parallax__image {
       left: 0;
       // width: 100%;
-      bottom: -45%;
-      height: 75%;
+      top: 60%;
       object-fit: cover;
+      height: 70%;
 
     }
   }
@@ -74,11 +81,10 @@
   &:nth-child(5) {
     // transform: translateZ(-200px) scale(3);
     display: block;
-
     .parallax__image {
       left: 0;
-      bottom: -65%;
-      height: 100%;
+      bottom: -40%;
+      height: 110%;
 
     }
   }
@@ -92,17 +98,29 @@
       bottom: 0;
       // top: 416px;
       width: 100%;
-      height: 50%;
+      height: 40%;
 
     }
   }
 
+  &:nth-child(7) {
+    display: block;
+
+    // transform: translateZ(-250px) scale(3.5) ;
+    .parallax__image {
+      right: 0;
+      bottom: 0;
+      // top: 416px;
+      width: 100%;
+      height: 40%;
+
+    }
+  }
 }
 
 .parallax__image {
   max-width: initial;
   max-height: initial;
   position: absolute;
-  height: 50%;
   width: 100%;
 }

@@ -1,6 +1,14 @@
 .user-data{
   display: flex;
   width: 60%;
+
+  @include tablets{
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
 }
 
 .user-data__desc{
@@ -10,6 +18,13 @@
   text-align: right;
   width: 28%;
   margin-right: 8%;
+  color: rgba($text-color, .5);
+
+  @include tablets{
+    margin-right: 0;
+    width: 100%;
+    text-align: inherit;
+  }
 }
 
 .user-data__name{
@@ -18,4 +33,8 @@
   font-weight: 800;
   line-height: 0.83;
   width: 64%;
+
+  @include tablets{
+    width: 100%;
+  }
 }

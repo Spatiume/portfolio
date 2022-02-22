@@ -2,6 +2,7 @@
   "text-color": "#ffffff",
   "text-color-black": "#333c49",
   "text-opacity": "rgba(255, 255, 255)",
+  "background-color":"#222427",
   "links-color": "#586ed3",
   "errors-color": "#cd1515",
   "bp-desktop-hd": "1800px",

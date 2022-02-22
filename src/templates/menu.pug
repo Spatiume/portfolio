@@ -1,0 +1,6 @@
+nav.menu
+  -var items = ['Главная', 'Обо мне',' Навыки','Работы','Отзывы','Связаться'];
+  ul.menu__list
+    each item, index in items
+      li.menu__item
+        a(moveTo=index).menu__link #{item}

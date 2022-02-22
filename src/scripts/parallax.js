@@ -1,9 +1,12 @@
 const parallax = document.querySelector('.parallax');
 const layers = parallax.children;
 
+
 function moveLayersDependsOnScroll(wScroll) {
 
   Array.from(layers).forEach(layer => {
+
+
 
     const divider = layer.dataset.speed;
 

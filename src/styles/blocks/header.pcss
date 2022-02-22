@@ -1,4 +1,4 @@
-.header{ 
+.header {
   padding-top: 52px;
   padding-bottom: 35px;
   display: flex;
@@ -6,22 +6,28 @@
   align-items: center;
 }
 
-.header__btns{
-  margin: 0 8%;
+.header__btns {
   font-size: 16px;
-  flex: 1;
   font-weight: 500;
   white-space: nowrap;
+  width: 65%;
+
+  @include tablets {
+    display: none;
+    width: 0;
+  }
 }
 
-.header__logo{
+.header__logo {
   font-size: 36px;
   font-weight: 800;
   // padding: 0 28px;
 }
 
-// .header__links{
-//   padding: 0 14px;
-// }
+.header__links {
 
+  @include tablets {
+    margin-left: auto;
 
+  }
+}

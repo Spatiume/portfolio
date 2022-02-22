@@ -1,14 +1,25 @@
 .reviews-section {
   width: 100%;
-  padding-bottom: 190px;
+  padding-bottom: 3%;
   position: relative;
 }
 
-.reviews-section__title{
-  margin-bottom: 9%;
+.reviews-section__title {
+  margin-bottom: 9.6%;
+
+  @include tablets{
+    margin-bottom: 20%;
+    text-align: center;
+  }
 }
 
 .reviews-section__content {
-  height: 310px;
-  border: 1px solid white;
+  min-height: 380px;
+  @include desktop {
+    min-height: 450px;
+  }
+
+  @include phones {
+    min-height: 320px;
+  }
 }

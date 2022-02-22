@@ -1,9 +1,14 @@
 .form {
-  color: #fff;
+  color: $text-color;
 }
 
 .form__title {
   margin-bottom: 83px;
+
+  @include phones {
+    text-align: center;
+    margin-bottom: 36px;
+  }
 }
 
 .form__row {
@@ -11,6 +16,14 @@
   // flex: 1;
   margin-bottom: 36px;
   justify-content: space-between;
+  
+  
+  @include phones {
+    flex-direction: column;
+    margin-bottom: 0;
+  }
+
+
 
   &-long{
     margin-bottom: 60px;

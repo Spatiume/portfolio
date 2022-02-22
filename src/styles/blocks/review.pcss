@@ -1,16 +1,25 @@
 .review {
-  padding-left: 92px;
+  padding-left: 22%;
+
+  @include tablets {
+    height: 500px;
+  }
+
+  @include phones {
+    height: 320px;
+  }
+
 
   color: rgba($text-color, .6);
   font-size: 16px;
   font-weight: 600;
   line-height: 1.88;
 
-  &&::before {
-    content: "";  
+  &::before {
+    content: "";
     position: absolute;
-    top:0;
-    left:0;
+    top: 0;
+    left: 0;
     display: block;
     width: 69px;
     height: 69px;
@@ -20,12 +29,16 @@
 }
 
 .review__text {
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .review__user {
   display: flex;
   align-items: center;
+}
+
+.review__user-info {
+  width: 66%;
 }
 
 .review__user-pic {
@@ -34,7 +47,7 @@
   border-radius: 50%;
   overflow: hidden;
   flex-shrink: 0;
-  margin-right: 7%;
+  margin-right: 8.5%;
 }
 
 .review__user-pic-full {
@@ -45,4 +58,5 @@
 .review__user-name {
   font-size: 18px;
   color: rgba($text-color, 1);
+  margin-bottom: 2%;
 }

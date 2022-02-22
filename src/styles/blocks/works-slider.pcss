@@ -2,7 +2,8 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  min-height: 700px;
+  min-height: 470px;
+  padding-bottom: 4%;
   @include tablets {
     min-height: initial;
     flex-direction: column;
@@ -11,17 +12,19 @@
 }
 
 .works-slider__pics {
-  width: 62vw;
-  height: 31vw;
-  max-width: 66%;
+  width: 58vw;
+  max-width: 62%;
   min-height: 340px;
+  height: 29vw;
+  max-height: 450px;
+
 
   position: relative;
   z-index: 10;
 
   @include tablets {
     margin-bottom: 105px;
-    width: 86%;
+    width: 100%;
     height: 340px;
     max-width: none;
     max-height: none;
@@ -29,11 +32,11 @@
   &:before {
     content: attr(data-slide);
     position: absolute;
-    top: 50%;
+    top: 38%;
     transform: translateY(-60%);
     line-height: 1;
     left: 100%;
-    font-size: 400px;
+    font-size: 300px;
     font-weight: 800;
     margin-left: -8%;
     color: $text-color-black;
@@ -159,8 +162,9 @@
 }
 
 .works-slider__data {
-  width: 24%;
+  width: 32%;
   z-index: 10;
+  min-height: 550px;
   @include tablets {
     width: 100%;
     display: flex;
@@ -168,6 +172,8 @@
     align-items: center;
     padding: 0 18%;
     text-align: center;
+    min-height: initial;
+    height: 450px;
   }
 
   @include phones {

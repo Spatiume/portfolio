@@ -5,9 +5,13 @@
 
 }
 
-.contacns__container {
-  padding-top: 10%;
-  padding-right: 20%;
+.contacts__container {
+  padding-top: 11.5%;
+  padding-right: 11%;
+
+  @include tablets {
+    padding-right: 0%;
+  }
 
 
   &::before {
@@ -15,9 +19,9 @@
     display: block;
     position: absolute;
     background: url(./../images/bg/leaves.png) center center/contain no-repeat;
-    height: 100%;
-    width: 30%;
-    top: -20%;
-    right: 0;
+    height: 1000px;
+    width: 400px;
+    top: -109px;
+    right: -153px;
   }
 }

@@ -1,13 +1,30 @@
-.longtitle__text{
-  font-size: 30px;
-  line-height: 36px;
-  color: currentColor;
-  font-weight: bold;
-  margin-bottom: 50px;
+.longtitle {
+  width: 59%;
+  margin-left: 10%;
+
+  @include tablets {
+    width: 75%;
+    margin-left: 0;
+    text-align: center;
+  }
 }
 
-.longtitle__decs{
-  line-height: 30px;
-  opacity: 0.3;
+
+.longtitle__text {
+  color: currentColor;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 1.2;
+  letter-spacing: 0.1px;
+
+  margin-bottom: 50px;
+
+}
+
+.longtitle__decs {
+  font-size: 16px;
   font-weight: 600;
+  line-height: 1.88;
+  color: rgba($text-color, .5);
+
 }

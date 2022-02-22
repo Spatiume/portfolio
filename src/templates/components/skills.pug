@@ -8,11 +8,11 @@ script(type="text/x-template")#skills-list
 script(type="text/x-template")#skills-row
   .skills-row 
     .skills-row__title {{category.title}}
-      ul.skills-row__list
-        li.skills-row__item(v-for="skill in category.skills" :key="skill.id")
-          skill(
-            :skill="skill"
-          )
+    ul.skills-row__list
+      li.skills-row__item(v-for="skill in category.skills" :key="skill.id")
+        skill(
+          :skill="skill"
+        )
 
 
 script(type="text/x-template")#skill
