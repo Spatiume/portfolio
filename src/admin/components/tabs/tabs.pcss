@@ -1,0 +1,28 @@
+.tabs-component{
+  display: flex;
+}
+
+.list{
+  display: flex;
+}
+
+.item{
+  position: relative;
+
+  &.active{
+    &:before{
+      position: absolute;
+      content: "";
+      display: block;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      background: #454573;
+    }
+  }
+}
+
+.btn{
+  padding: 20px;
+}
