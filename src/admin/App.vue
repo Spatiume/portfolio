@@ -1,29 +1,33 @@
 <template lang="pug">
 .root-wrapper-container
   .root-container
-    template
-      header.header-container
-        headline
-          user(username="Pavel Sysoev")
-            avatar(src="./../../src/images/content/user.jpg")
+    header.header-container
+      headline
+        user(username="Pavel Sysoev")
+          avatar(src="./../../src/images/content/user.jpg")
 
-      section.tabs-container
-        tabs
-      main.content-container
-        .container
-          .header
-            .title Блок "Обо мне"
-            iconed-button(
-              type="iconed",
-              v-if="emptyCatIsShow == false",
-              @click="emptyCatIsShow = true",
-              title="Добавить группу"
-            )
-          ul.categories-skills
-            li.item(v-if="emptyCatIsShow")
-              category
-            li.item(v-for="category in categories", :key="category.id")
-              category(:title="category.title", :skills="category.skills")
+    section.tabs-container
+      tabs
+
+    section.router
+
+    main.content-container
+      router-view
+
+      //- .container
+      //-   .header
+      //-     .title Блок "Обо мне"
+      //-     iconed-button(
+      //-       type="iconed",
+      //-       v-if="emptyCatIsShow == false",
+      //-       @click="emptyCatIsShow = true",
+      //-       title="Добавить группу"
+      //-     )
+      //-   ul.categories-skills
+      //-     li.item(v-if="emptyCatIsShow")
+      //-       category
+      //-     li.item(v-for="category in categories", :key="category.id")
+      //-       category(:title="category.title", :skills="category.skills")
 </template> 
 
 <script>
@@ -49,9 +53,7 @@ export default {
       emptyCatIsShow: false,
     };
   },
-  methods: {
-
-  },
+  methods: {},
   created() {
     this.categories = require("./../data/skills.json");
   },

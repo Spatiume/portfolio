@@ -2,7 +2,6 @@ import headline from "./headline.vue";
 
 export default {
   title: "headline",
-
 }
 
 export const defaultView = () => ({

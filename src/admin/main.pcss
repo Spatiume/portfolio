@@ -3,11 +3,23 @@
 @import "./../styles/layout/base.pcss";
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800");
 
-.admin-wrapper{
+.admin-wrapper {
   background-color: white;
+  color: black;
 }
 
-.categories-skills{
+.tabs-container {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.content-container {
+  color: $text-color-black;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.categories-skills {
   display: flex;
   flex-wrap: wrap;
 }
@@ -17,20 +29,18 @@
   max-width: 500px;
   margin-right: 20px;
 
-  &:last-child{
+  &:last-child {
     margin-right: 0;
   }
 }
 
-.content-container{
-  color: $text-color-black;
-}
 
-.header{
+
+.header {
   display: flex;
   align-items: center;
   padding: 20px;
-  
+
   .title {
     margin-right: 20px;
     font-size: 20px;

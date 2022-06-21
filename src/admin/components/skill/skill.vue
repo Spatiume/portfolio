@@ -1,95 +1,128 @@
 <template lang="pug">
 .skill-component
-  .skill-show(:class="{ hideElem: changeActive == 1 }")
-    .skill-title {{ skillTitle }}
-    .skill-percent {{ skillPercent }}
+  .skill-show(v-if="editMode === false")
+    .skill-title {{ skill.title }}
+    .skill-percent {{ skill.percent }}
     ul.skill-instruments
       li.skill-instruments-item
         icon.skill-change(
           grayscale,
           symbol="pencil",
-          @click="skillChangeActive"
+          title="Редактировать",
+          @click="editModeForSkill"
         )
       li.skill-instruments-item
-        icon.skill-remove(grayscale, symbol="trash", @click="skillRemove")
-  .skill-change(:class="{ hideElem: changeActive == 0 }")
+        icon.skill-remove(
+          grayscale,
+          symbol="trash",
+          title="Удалить",
+          @click="skillRemove"
+        )
+
+  .skill-edit(v-else)
     appInput#input-skillTitle.skill-title(
-      v-model="skillTitle",
-      :errorMessage="errorMessage.title"
+      v-model="editedSkill.title",
+      :errorMessage="errorMessage.title",
+      autofocus="autofocus",
+      @keydown.native.enter="editCurrentSkill",
+      @keydown.native.esc="canselEditModeForSkill"
     )
     appInput#input-skillPercent.skill-percent(
-      v-model="skillPercent",
-      :errorMessage="errorMessage.percent"
+      type="number",
+      min="0",
+      max="100",
+      maxlength="3",
+      v-model="editedSkill.percent",
+      :errorMessage="errorMessage.percent",
+      autofocus="autofocus",
+      @keydown.native.enter="editCurrentSkill",
+      @keydown.native.esc="canselEditModeForSkill"
     )
     ul.skill-instruments
       li.skill-instruments-item
-        icon(grayscale, symbol="tick", @click="skillTryToChange")
+        icon(
+          grayscale,
+          symbol="tick",
+          title="Изменить",
+          @click.submit="editCurrentSkill"
+        )
       li.skill-instruments-item
-        icon(grayscale, symbol="cross", @click="skillChangeCancel")
+        icon(
+          grayscale,
+          symbol="cross",
+          title="Отмена",
+          @click="canselEditModeForSkill"
+        )
 </template>
 
 <script>
 import icon from "./../icon";
 import appInput from "./../input";
+import { mapActions } from "vuex";
 
 export default {
-  props: ["title", "percent"],
+  props: {
+    skill: {
+      type: Object,
+      default: () => {},
+      required: true,
+    },
+  },
   components: { icon, appInput },
   data() {
     return {
-      skillTitle: this.title,
-      skillPercent: this.percent,
-      titleBeforeChange: "",
-      percentBeforeChange: "",
-      changeActive: false,
+      editMode: false,
       errorMessage: { title: "", percent: "" },
+      editedSkill: {
+        ...this.skill,
+      },
     };
   },
   methods: {
-    validateInput(title, percent) {
-      this.errorMessage = { title: "", percent: "" };
-      if (title === "" || title.length < 2) {
-        this.errorMessage.title = "Заполните строку";
-        return false;
+    ...mapActions("skills", ["removeSkill", "editSkill"]),
+    editModeForSkill() {
+      this.editMode = true;
+    },
+    canselEditModeForSkill() {
+      this.editMode = false;
+      this.editedSkill = { ...this.skill };
+    },
+    async editCurrentSkill() {
+      try {
+        await this.editSkill(this.editedSkill);
+        this.editedSkill = { ...this.skill };
+      } catch (error) {
+        console.log(error);
       }
-      if (isNaN(percent) || percent > 100 || percent < 0 || percent === "") {
-        this.errorMessage.percent = "Введите число от 0 до 100";
-        return false;
-      }
-      return true;
+      this.editMode = false;
     },
-    returnSkillData() {
-      this.errorMessage = { title: "", percent: "" };
-      this.skillTitle = this.titleBeforeChange;
-      this.skillPercent = this.percentBeforeChange;
-    },
-    saveSkillData(){
-      this.titleBeforeChange = this.skillTitle;
-      this.percentBeforeChange = this.skillPercent;
-    },
-    skillChangeActive() {
-      this.changeActive = true;
-      this.saveSkillData();
-    },
-    skillTryToChange() {
-      if (this.validateInput(this.skillTitle, this.skillPercent)) {
-        this.changeActive = false;
+    async skillRemove() {
+      try {
+        await this.removeSkill(this.skill);
+      } catch (error) {
+        console.log(error);
       }
     },
-    skillChangeCancel() {
-      this.changeActive = false;
-      this.returnSkillData();
-    },
-    skillRemove() {
-      console.log("remove");
-    },
+
+    // validateInput(title, percent) {
+    //   this.errorMessage = { title: "", percent: "" };
+    //   if (title === "" || title.length < 2) {
+    //     this.errorMessage.title = "Заполните строку";
+    //     return false;
+    //   }
+    //   if (isNaN(percent) || percent > 100 || percent < 0 || percent === "") {
+    //     this.errorMessage.percent = "Введите число от 0 до 100";
+    //     return false;
+    //   }
+    //   return true;
+    // },
   },
 };
 </script>
 
 <style lang="postcss" scoped>
 .skill-show,
-.skill-change {
+.skill-edit {
   display: flex;
   align-item: center;
 }
@@ -120,7 +153,7 @@ export default {
   }
 }
 
-.hideElem {
+/* .hideElem {
   display: none;
-}
+} */
 </style>

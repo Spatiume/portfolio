@@ -1,16 +1,24 @@
-.tabs-component{
+.tabs-component {
+  display: flex;
+
+}
+
+.tabs-list {
   display: flex;
 }
 
-.list{
-  display: flex;
+.tabs-item {
+  margin-right: 20px;
 }
 
-.item{
+.btn {
+  // display: flex;
+  padding: 20px;
+  background: inherit;
   position: relative;
 
-  &.active{
-    &:before{
+  &.active {
+    &:before {
       position: absolute;
       content: "";
       display: block;
@@ -21,8 +29,6 @@
       background: #454573;
     }
   }
-}
 
-.btn{
-  padding: 20px;
+  // flex: 1;
 }

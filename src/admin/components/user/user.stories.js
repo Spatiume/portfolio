@@ -22,7 +22,7 @@ export const withAvatarView = () => ({
   template: `
     <user 
     username="Pavel Sysoev">
-      <avatar src="https://picsum.photos/300/300" />
+      <avatar src="https://picsum.photos/300/300" size="5"/>
     </user>
   `,
 });

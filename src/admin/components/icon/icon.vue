@@ -1,7 +1,7 @@
 <template>
   <button
-    :class="['icon-component', iconClass, {'grayscale': this.grayscale}, {'no-words' : !!title === false}]"
-    :data-text="title"
+    :class="['icon-component', iconClass, {'grayscale': this.grayscale}, {'no-words' : !!btnTitle === false}]"
+    :data-text="btnTitle"
     type="button"
     v-on="$listeners"
   ></button>
@@ -18,7 +18,7 @@ export default {
     grayscale: {
       type: Boolean
     },
-    title: {
+    btnTitle: {
       type: String,
       default: ""
     }
