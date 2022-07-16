@@ -12,5 +12,5 @@ export default {
 
 }
 </script>
-
+z
 <style lang="postcss" scoped src="./headline.pcss"></style>

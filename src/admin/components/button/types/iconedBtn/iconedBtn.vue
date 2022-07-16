@@ -1,8 +1,5 @@
-<template>
-  <button 
-    v-on="$listeners"
-    class="button-component"
-  >{{title}}</button>
+<template lang="pug">
+button.button-component(v-on="$listeners") {{ title }}
 </template>
 
 <script>
@@ -10,9 +7,9 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Добавить группу"
-    }
-  }
+      default: "Добавить группу",
+    },
+  },
 };
 </script>
 

@@ -13,21 +13,6 @@
 
     main.content-container
       router-view
-
-      //- .container
-      //-   .header
-      //-     .title Блок "Обо мне"
-      //-     iconed-button(
-      //-       type="iconed",
-      //-       v-if="emptyCatIsShow == false",
-      //-       @click="emptyCatIsShow = true",
-      //-       title="Добавить группу"
-      //-     )
-      //-   ul.categories-skills
-      //-     li.item(v-if="emptyCatIsShow")
-      //-       category
-      //-     li.item(v-for="category in categories", :key="category.id")
-      //-       category(:title="category.title", :skills="category.skills")
 </template> 
 
 <script>
@@ -55,7 +40,6 @@ export default {
   },
   methods: {},
   created() {
-    this.categories = require("./../data/skills.json");
   },
 };
 </script>

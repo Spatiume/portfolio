@@ -19,13 +19,13 @@
           @click="skillRemove"
         )
 
-  .skill-edit(v-else)
+  form.skill-edit(v-else, @submit.prevent="editCurrentSkill")
     appInput#input-skillTitle.skill-title(
       v-model="editedSkill.title",
-      :errorMessage="errorMessage.title",
+      :errorMessage="validation.firstError('editedSkill.title')",
       autofocus="autofocus",
-      @keydown.native.enter="editCurrentSkill",
-      @keydown.native.esc="canselEditModeForSkill"
+      @keydown.native.esc="canselEditModeForSkill",
+      ref="skillInput"
     )
     appInput#input-skillPercent.skill-percent(
       type="number",
@@ -33,19 +33,12 @@
       max="100",
       maxlength="3",
       v-model="editedSkill.percent",
-      :errorMessage="errorMessage.percent",
-      autofocus="autofocus",
-      @keydown.native.enter="editCurrentSkill",
+      :errorMessage="validation.firstError('editedSkill.percent')",
       @keydown.native.esc="canselEditModeForSkill"
     )
     ul.skill-instruments
       li.skill-instruments-item
-        icon(
-          grayscale,
-          symbol="tick",
-          title="Изменить",
-          @click.submit="editCurrentSkill"
-        )
+        icon.submit(grayscale, symbol="tick", title="Изменить", type="submit")
       li.skill-instruments-item
         icon(
           grayscale,
@@ -59,8 +52,19 @@
 import icon from "./../icon";
 import appInput from "./../input";
 import { mapActions } from "vuex";
+import { Validator } from "simple-vue-validator";
 
 export default {
+  mixins: [require("simple-vue-validator").mixin],
+  validators: {
+    "editedSkill.title"(value) {
+      return Validator.value(value).required("Поле не может быть пустым");
+    },
+    "editedSkill.percent"(value) {
+      return Validator.value(value).required("Поле не может быть пустым");
+      // .lessThan(100);
+    },
+  },
   props: {
     skill: {
       type: Object,
@@ -82,17 +86,20 @@ export default {
     ...mapActions("skills", ["removeSkill", "editSkill"]),
     editModeForSkill() {
       this.editMode = true;
+      this.focusInput();
     },
     canselEditModeForSkill() {
       this.editMode = false;
       this.editedSkill = { ...this.skill };
     },
     async editCurrentSkill() {
+      if (this.validation.hasError()) return;
+
       try {
         await this.editSkill(this.editedSkill);
         this.editedSkill = { ...this.skill };
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
       this.editMode = false;
     },
@@ -100,22 +107,14 @@ export default {
       try {
         await this.removeSkill(this.skill);
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
-
-    // validateInput(title, percent) {
-    //   this.errorMessage = { title: "", percent: "" };
-    //   if (title === "" || title.length < 2) {
-    //     this.errorMessage.title = "Заполните строку";
-    //     return false;
-    //   }
-    //   if (isNaN(percent) || percent > 100 || percent < 0 || percent === "") {
-    //     this.errorMessage.percent = "Введите число от 0 до 100";
-    //     return false;
-    //   }
-    //   return true;
-    // },
+    focusInput() {
+      this.$nextTick(function () {
+        this.$refs.skillInput.$el.focus();
+      });
+    },
   },
 };
 </script>
@@ -147,6 +146,10 @@ export default {
   display: flex;
   align-items: center;
   margin-right: 20px;
+
+  .submit {
+    background: transparent;
+  }
 
   &:last-child {
     margin-right: 0;

@@ -3,8 +3,10 @@ form.skillAddLine-component(@submit.prevent="addNewSkill")
   appInput#input-skillTitle.skill-title(
     v-model="skill.title",
     placeholder="New skill",
-    :errorMessage="errorMessage"
+    :errorMessage="validation.firstError('skill.title')",
+    ref="inputAddSkill"
   )
+
   appInput#input-skillPercent.skill-percent(
     type="number",
     min="0",
@@ -12,8 +14,9 @@ form.skillAddLine-component(@submit.prevent="addNewSkill")
     maxlength="3",
     v-model="skill.percent",
     placeholder="10",
+    :errorMessage="validation.firstError('skill.percent')"
   )
-  iconedBtn.btn(type="submit", title=" ")
+  iconedBtn.btn(type="submit", title=" ") 
 </template>
 
 <script>
@@ -22,7 +25,18 @@ import iconedBtn from "./../button/types/iconedBtn";
 
 import { mapActions } from "vuex";
 
+import { Validator } from "simple-vue-validator";
+
 export default {
+  mixins: [require("simple-vue-validator").mixin],
+  validators: {
+    "skill.title"(value) {
+      return Validator.value(value).required("Поле не может быть пустым");
+    },
+    "skill.percent"(value) {
+      return Validator.value(value).required("Поле не может быть пустым");
+    },
+  },
   components: {
     appInput,
     iconedBtn,
@@ -39,51 +53,49 @@ export default {
         title: "",
         percent: "",
       },
-      errorMessage: '',
     };
   },
   methods: {
     ...mapActions("skills", ["addSkill"]),
+    ...mapActions("categories", ["fetchCategories"]),
+
     async addNewSkill() {
+      // this.$validate().then((success) => {
+      //   if (!success) return;
+      // });
+      this.$validate();
+      if (this.validation.hasError()) return;
+
       const newSkill = {
         ...this.skill,
         category: this.categoryId,
       };
-      console.log(newSkill);
       try {
         await this.addSkill(newSkill);
+        //очищаем форму и валидатор
+        this.skill = {
+          title: "",
+          percent: "",
+        };
+        this.validation.reset();
+        //делаем фокус на input при добавлении нового skill
+        this.focusInput();
+        /* ОБНОВЛЯЕМ ВСЕ КАТЕГОРИИ, вот почему:
+        поле id у skill присваивается на сервере
+        в случае если после создания skill мы захотим удалить или изменить его,
+        нам нужно будет поле id, которая генерируется на сервере
+        возможности загрузить отдельно skill не предусмотренно
+        поэтому мы обновляем всю категорию   */
+        this.fetchCategories();
       } catch (error) {
-        console.log(error);
-        this.errorMessage = error;
+        alert(error);
       }
-      this.skill.title = "",
-      this.skill.percent = ""
     },
-    // validateInput(title, percent) {
-    //   this.errorMessage = { title: "", percent: "" };
-    //   if (title === "" || title.length < 2) {
-    //     this.errorMessage.title = "Заполните строку";
-    //     return false;
-    //   }
-    //   if (isNaN(percent) || percent > 100 || percent < 0 || percent === "") {
-    //     this.errorMessage.percent = "Введите число от 0 до 100";
-    //     return false;
-    //   }
-    //   return true;
-    // },
-    // onClick() {
-    //   if (this.validateInput(this.skillTitle, this.skillPercent)) {
-    //     this.$emit("createNewSkill", {
-    //       title: this.skillTitle,
-    //       percent: this.skillPercent,
-    //     });
-    //     console.log(
-    //       "Skill = " + this.skillTitle + " , percent = " + this.skillPercent
-    //     );
-    //     this.skillTitle = " ";
-    //     this.skillPercent = " ";
-    //   }
-    // },
+    focusInput() {
+      this.$nextTick(function () {
+        this.$refs.inputAddSkill.$el.focus();
+      });
+    },
   },
 };
 </script>

@@ -1,10 +1,10 @@
-<template>
-  <button
-    :class="['icon-component', iconClass, {'grayscale': this.grayscale}, {'no-words' : !!btnTitle === false}]"
-    :data-text="btnTitle"
-    type="button"
-    v-on="$listeners"
-  ></button>
+<template lang="pug">
+button(
+  :class="['icon-component', iconClass, { grayscale: this.grayscale }, { 'no-words': !!btnTitle === false }]",
+  :data-text="btnTitle",
+  type="button",
+  v-on="$listeners"
+)
 </template>
 
 <script>
@@ -13,21 +13,22 @@ export default {
     symbol: {
       type: String,
       default: "pencil",
-      validator: value => ["pencil", "cross", "tick", "trash"].includes(value)
+      validator: (value) =>
+        ["pencil", "cross", "tick", "trash"].includes(value),
     },
     grayscale: {
-      type: Boolean
+      type: Boolean,
     },
     btnTitle: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
   computed: {
     iconClass() {
       return `is-${this.symbol}`;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -1,48 +1,37 @@
-<template>
-  <div class="edit-line-component" :class="{ blocked: blocked }">
-    <div class="title" v-if="editmode === false">
-      <div class="text">{{ value }}</div>
-      <div class="icon">
-        <icon
-          symbol="pencil"
-          grayscale
-          @click="editmode = true"
-          title="Редактировать"
-        ></icon>
-      </div>
-    </div>
-    <div v-else class="title">
-      <div class="input">
-        <app-input
-          placeholder="Название новой группы"
-          :value="value"
-          :errorText="errorText"
-          @input="$emit('input', $event)"
-          @keydown.native.enter="onApprove"
-          autofocus="autofocus"
-          no-side-paddings="no-side-paddings"
-        ></app-input>
-      </div>
-      <div class="buttons">
-        <div class="button-icon">
-          <icon
-            symbol="tick"
-            grayscale
-            @click="onApprove"
-            title="Изменить"
-          ></icon>
-        </div>
-        <div class="button-icon">
-          <icon
-            symbol="cross"
-            grayscale
-            @click="$emit('remove')"
-            title="Удалить категорию"
-          ></icon>
-        </div>
-      </div>
-    </div>
-  </div>
+<template lang="pug">
+.edit-line-component(:class="{ blocked: blocked }")
+  .title(v-show="editmode === false")
+    .text {{ value }}
+    .icon
+      icon(
+        symbol="pencil",
+        grayscale="",
+        @click="editmode = true",
+        title="Редактировать"
+      )
+      icon(
+        grayscale,
+        symbol="trash",
+        title="Удалить",
+        @click="$emit('remove')"
+      )
+  .title(v-show="editmode === true")
+    .input
+      app-input(
+        placeholder="Название новой группы",
+        :value="value",
+        :errorMessage="errorMessage",
+        @input="$emit('input', $event)",
+        @keydown.native.enter="onApprove",
+        autofocus="autofocus",
+        no-side-paddings="no-side-paddings",
+        ref="inputEditLine"
+      )
+    .buttons
+      .button-icon
+        icon(symbol="tick", grayscale="", @click="onApprove", title="Принять")
+      .button-icon
+        icon(symbol="cross", grayscale="", @click="onCancel", title="Отменить")
 </template>
 
 <script>
@@ -52,7 +41,7 @@ export default {
       type: String,
       default: "",
     },
-    errorText: {
+    errorMessage: {
       type: String,
       default: "",
     },
@@ -65,22 +54,40 @@ export default {
   data() {
     return {
       editmode: this.currentEditMode,
-      title: this.value,
+      editedValue: this.value,
     };
   },
   methods: {
-    onApprove() {
-      if (this.title.trim() === this.value.trim()) {
-      } else {
-        this.$emit("approve", this.value);
-      }
-
+    onCancel() {
+      this.$emit("cancel", this.editedValue);
       this.editmode = false;
-      //для добавления категории
+    },
+    onApprove() {
+      this.$emit("approve", this.value);
+      this.editmode = false;
+
+      //для добавления  новой категории
       if (this.currentEditMode) {
         this.editmode = this.currentEditMode;
       }
     },
+    focusInput() {
+      this.$nextTick(function () {
+        this.$refs.inputEditLine.$el.focus();
+      });
+    },
+  },
+  watch: {
+    editmode() {
+      if (this.editmode) {
+        this.focusInput();
+      }
+    },
+  },
+  mounted(){
+    if(this.currentEditMode){
+      this.focusInput();
+    }
   },
   components: {
     icon: () => import("components/icon"),

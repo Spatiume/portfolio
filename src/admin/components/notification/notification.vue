@@ -1,8 +1,7 @@
-<template>
-  <div class="inner-tooltip-container" :class="type">
-    <div class="tooltip__text">{{text}}</div>
-    <button v-on="$listeners" class="tooltip__close"></button>
-  </div>
+<template lang="pug">
+.inner-tooltip-container(:class="type")
+  .tooltip__text {{text}}
+  button.tooltip__close(v-on="$listeners")
 </template>
 
 <script>

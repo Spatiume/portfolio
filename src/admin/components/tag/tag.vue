@@ -1,5 +1,5 @@
-<template>
-  <div class="tag">{{title}}</div>
+<template lang="pug">
+.tag {{title}}
 </template>
 
 <script>

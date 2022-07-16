@@ -2,26 +2,19 @@
 .category-component
   .category-title
     editLine(
-      v-if="this.empty",
-      v-model="newCategoryTitle",
-      :currentEditMode="this.empty",
-      @approve="createNewCategory",
-      @remove="canselCreateNewCategory"
-    )
-    editLine(
-      v-else,
       v-model="editedCategory.category",
       @approve="editCurrentCategory",
-      @remove="removeCategoryById"
+      @remove="removeCategoryById",
+      @cansel="canselEditCategory",
+      :errorMessage="validation.firstError('editedCategory.category')"
     )
   ul.skills-list
     li.skills-item(
       v-for="skill in category.skills",
       :key="skill.id",
-      :skillsLength="skillsLength"
     )
       skill(:skill="skill")
-  .addNewSkill(:class="{'blocked': this.empty}")
+  .addNewSkill()
     skillAddLine(:categoryId="category.id")
 </template>
 
@@ -29,11 +22,17 @@
 import editLine from "./../editLine";
 import skill from "./../skill";
 import skillAddLine from "./../skillAddLine";
-import iconedBtn from "./../button/types/iconedBtn";
 
 import { mapActions } from "vuex";
+import { Validator } from "simple-vue-validator";
 
 export default {
+  mixins: [require("simple-vue-validator").mixin],
+  validators: {
+    "editedCategory.category"(value) {
+      return Validator.value(value).required("Поле не может быть пустым");
+    },
+  },
   props: {
     category: {
       type: Object,
@@ -41,78 +40,40 @@ export default {
         return {};
       },
     },
-    empty: {
-      type: Boolean,
-      default() {
-        return false;
-      },
-    },
   },
-  components: { skill, skillAddLine, editLine, iconedBtn },
+  components: { skill, skillAddLine, editLine },
   data() {
     return {
-      skillsLength: 0,
       editedCategory: {
         ...this.category,
       },
-      newCategoryTitle: "",
-      showFormCategory: true,
     };
   },
   computed: {},
   methods: {
     ...mapActions("categories", [
-      "addCategory",
       "removeCategory",
       "editCategoryTitle",
-      "fetchCategories",
     ]),
-    async createNewCategory() {
-      console.log("createNewCategory");
-      try {
-        await this.addCategory(this.newCategoryTitle);
-        this.fetchCategories();
-      } catch (error) {
-        console.log(error.message);
-      }
-      this.newCategoryTitle = "";
-      this.$emit("hideFormNewCategory");
-      this.showFormCategory = false;
-    },
-    canselCreateNewCategory() {
-      this.newCategoryTitle = "";
-      this.$emit("hideFormNewCategory");
-    },
     async editCurrentCategory() {
+      if (this.validation.hasError()) return;
       try {
         await this.editCategoryTitle(this.editedCategory);
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
+      this.editedCategory = { ...this.category };
+    },
+    canselEditCategory() {
       this.editedCategory = { ...this.category };
     },
     async removeCategoryById() {
       try {
         await this.removeCategory(this.category.id);
       } catch (error) {
-        console.log(error);
+        alert(error);
       }
     },
-    isEmpty(obj) {
-      for (let key in obj) {
-        // если тело цикла начнет выполняться - значит в объекте есть свойства
-        return false;
-      }
-      return true;
-    },
-  },
-  created() {
-    // console.log(this.isEmpty(this.category));
-    if (this.empty == true) {
-      this.title = "";
-      this.skills = [];
-      console.log("chtoto tut est", this.empty);
-    }
   },
 };
 </script>
@@ -134,6 +95,7 @@ export default {
 }
 
 .category-title {
+  position: relative;
   font-size: 24px;
   border-bottom: 2px solid rgba(156, 156, 156, 0.4);
   padding-bottom: 16px;
