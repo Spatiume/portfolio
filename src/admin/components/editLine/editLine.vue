@@ -59,12 +59,15 @@ export default {
   },
   methods: {
     onCancel() {
-      this.$emit("cancel", this.editedValue);
+      this.$emit("cancel");
       this.editmode = false;
     },
     onApprove() {
-      this.$emit("approve", this.value);
-      this.editmode = false;
+      //чтобы не отправлять пустую строку
+      if (this.value.length > 0) {
+        this.$emit("approve", this.value);
+        this.editmode = false;
+      }
 
       //для добавления  новой категории
       if (this.currentEditMode) {
@@ -84,8 +87,8 @@ export default {
       }
     },
   },
-  mounted(){
-    if(this.currentEditMode){
+  mounted() {
+    if (this.currentEditMode) {
       this.focusInput();
     }
   },

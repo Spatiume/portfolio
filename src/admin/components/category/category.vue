@@ -5,16 +5,13 @@
       v-model="editedCategory.category",
       @approve="editCurrentCategory",
       @remove="removeCategoryById",
-      @cansel="canselEditCategory",
+      @cancel="cancelEditCategory",
       :errorMessage="validation.firstError('editedCategory.category')"
     )
   ul.skills-list
-    li.skills-item(
-      v-for="skill in category.skills",
-      :key="skill.id",
-    )
+    li.skills-item(v-for="skill in category.skills", :key="skill.id")
       skill(:skill="skill")
-  .addNewSkill()
+  .addNewSkill
     skillAddLine(:categoryId="category.id")
 </template>
 
@@ -51,10 +48,7 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapActions("categories", [
-      "removeCategory",
-      "editCategoryTitle",
-    ]),
+    ...mapActions("categories", ["removeCategory", "editCategoryTitle"]),
     async editCurrentCategory() {
       if (this.validation.hasError()) return;
       try {
@@ -64,7 +58,7 @@ export default {
       }
       this.editedCategory = { ...this.category };
     },
-    canselEditCategory() {
+    cancelEditCategory() {
       this.editedCategory = { ...this.category };
     },
     async removeCategoryById() {

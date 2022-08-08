@@ -1,5 +1,5 @@
 <template lang="pug">
-component(:is="type", v-bind="$attrs", v-on="$listeners") 
+component(:is="type", v-bind="$attrs", v-on="$listeners" type="typeBtn") 
 </template>
 
 <script>
@@ -8,6 +8,10 @@ export default {
     type: {
       type: String,
       default: "default",
+    },
+    typeBtn: {
+      type: String,
+      default: "button"
     },
   },
   components: {

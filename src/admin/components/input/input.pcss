@@ -10,17 +10,17 @@
 .input {
   display: block;
   position: relative;
+  
 
   &.no-side-paddings {
     .input__elem {
       padding-right: 0;
-      padding-left: 0;
     }
   }
 
   &_labeled {
     .input__elem {
-      padding: 15px 0 18px;
+      padding: 15px 0 18px 10px;
     }
   }
 
@@ -74,19 +74,23 @@
 }
 
 .title {
-  color: rgba(65, 76, 99, 0.5);
+  color: rgba(29, 29, 29, 0.75);
   font-weight: 600;
-  opacity: 0.5;
+  // opacity: 0.5;
 }
 
 .textarea__elem {
   height: 150px;
   padding: 20px;
-  border: 1px solid rgba($text-color, 0.2);
+  border: 1px solid rgba(black, 0.5);
   resize: none;
   font-weight: 600;
   margin-top: 10px;
   width: 100%;
+
+  &::placeholder {
+    color: rgba(55, 62, 66, 0.25);
+  }
 }
 
 .input__elem {

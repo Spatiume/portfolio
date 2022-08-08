@@ -1,5 +1,5 @@
 import category from "./category.vue";
-import categories from './../../../data/skills.json';
+import categories from '../../../data/skills.json';
 
 const skills = categories[0].skills;
 

@@ -8,7 +8,6 @@ import { generateStdError } from "./helpers/errorHendler"
 import VueSimpleValidator from 'simple-vue-validator';
 import directives from "./directives/"
 
-
 Vue.use(VueSimpleValidator);
 
 

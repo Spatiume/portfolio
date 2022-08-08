@@ -19,7 +19,7 @@ defaultView.story = {
 export const labeledView = () => ({
   components: { icon },
   template: `
-    <icon title="удалить" />
+    <icon symbol="cross" btnTitle="удалить" />
   `,
 });
 

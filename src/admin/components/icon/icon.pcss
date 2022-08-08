@@ -3,6 +3,7 @@
   align-items: center;
   padding: 0;
   outline: none;
+  background: none;
 
   &:focus {
     outline: 1px dotted grey;
@@ -19,11 +20,20 @@
     }
   }
 
+  &:hover {
+    &::before {
+      color: black;
+    }
+  }
+
   &:before {
     content: attr(data-text);
     font-weight: 600;
-    color: rgba(65, 76, 99, 0.4);
+    font-family: inherit;
+    color: rgba(65, 76, 99, 0.7);
     margin-right: 18px;
+
+
   }
 
   &:after {
@@ -33,7 +43,8 @@
     display: block;
   }
 
-  @each $icon, $fill in (pencil, cross, tick, trash),
+  @each $icon,
+  $fill in (pencil, cross, tick, trash),
   (#3942cc, #c73033, #00d70a, #414c62) {
     &.is-$(icon) {
       &:after {
@@ -44,7 +55,8 @@
 
   &.grayscale {
 
-    @each $icon, $fill in (pencil, cross, tick, trash),
+    @each $icon,
+    $fill in (pencil, cross, tick, trash),
     (#3942cc, #c73033, #00d70a, #414c62) {
       &.is-$(icon) {
         &:after {

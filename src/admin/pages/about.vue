@@ -1,7 +1,7 @@
 <template lang="pug">
 section.about-page-component
   .about-page-header
-    h1.section-title Обо мне
+    h1.section-title Блок &#171Обо мне&#187 
     roundBtn.btn-newcategory(
       type="iconed",
       @click="showFormCategory = true",
@@ -56,6 +56,8 @@ export default {
   display: flex;
 }
 
+
+
 .about-page-header {
   display: flex;
   align-items: center;
@@ -76,9 +78,13 @@ export default {
 .categories-item {
   width: 45%;
   margin-right: 5%;
+  margin-bottom: 5%;
+
+  background: white;
 
   @include tablets {
     width: 100%;
+    margin-right: 0;
   }
 }
 </style>

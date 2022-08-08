@@ -13,12 +13,12 @@ label.input(
     tooltip(:text="errorMessage")
 label.textarea(
   v-else-if="fieldType === 'textarea'",
-  v-bind="$attrs",
   :class="{ error: !!errorMessage }"
 )
   .title(v-if="title") {{ title }}
   textarea.textarea__elem.field__elem(
     :value="value",
+    v-bind="$attrs",
     :class="{ error: !!errorMessage }",
     @input="$emit('input', $event.target.value)"
   )
