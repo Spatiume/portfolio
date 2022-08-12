@@ -2,20 +2,20 @@
 .works-page-component
   .works-page-header
     h1.section-title Блок &#171Мои работы&#187
-  addWork(
+  formWork(
     v-if="mode == 'edit' || mode == 'create'",
     :mode="mode",
     :workToEdit="workToEdit",
-    @closeAddWork="closeAddWork",
-    @createAddWork="mode = ''",
-    @editAddWork="(mode = ''), (workToEdit = {})"
+    @close="closeFormWork",
+    @create="createNewWork",
+    @edit="editCurrentWork"
   )
   .works__list
     squareBtn.works__item(@click="(mode = 'create'), (workToEdit = {})")
     .works__item(v-for="work in works", :key="work.id")
       work(
         :work="work",
-        @onChange="editCurrentWork",
+        @onChange="sendForEditWork",
         @remove="removeCurrentWork",
         :class="{ 'disabled-current-item': work.id == workToEdit.id }"
       )
@@ -24,11 +24,11 @@
 <script>
 import work from "./../components/work";
 import squareBtn from "./../components/button/types/squareBtn";
-import addWork from "./../components/addWork";
+import formWork from "./../components/formWork";
 import { mapActions, mapState } from "vuex";
 
 export default {
-  components: { work, squareBtn, addWork },
+  components: { work, squareBtn, formWork },
   data() {
     return {
       mode: "",
@@ -41,15 +41,38 @@ export default {
     }),
   },
   methods: {
-    editCurrentWork(currentWork) {
+    sendForEditWork(currentWork) {
       this.workToEdit = currentWork;
       this.mode = "edit";
     },
-    closeAddWork() {
+    closeFormWork() {
       this.mode = "";
       this.workToEdit = {};
     },
-    ...mapActions("works", ["fetchWorks", "removeWork"]),
+    ...mapActions("works", [
+      "addWork",
+      "editWork",
+      "fetchWorks",
+      "removeWork",
+    ]),
+    async createNewWork(newWork) {
+      console.log(newWork);
+      try {
+        await this.addWork(newWork);
+        this.mode = "";
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async editCurrentWork(editedWork) {
+      try {
+        await this.editWork(editedWork);
+        this.mode = "";
+        this.workToEdit = {};
+      } catch (error) {
+        console.log(error);
+      }
+    },
     async removeCurrentWork(workToRemoveId) {
       try {
         await this.removeWork(workToRemoveId);

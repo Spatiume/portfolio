@@ -1,14 +1,14 @@
-import addWork from "./addWork.vue";
+import formWork from "./formWork.vue";
 
 export default {
-  title: "addWork",
-  components: {addWork}
+  title: "formWork",
+  components: {formWork}
 }
 
 export const defaultView = () => ({
-  components: { addWork },
+  components: { formWork },
   template: `
-    <addWork />
+    <formWork />
   `
 });
 

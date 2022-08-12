@@ -1,17 +1,17 @@
 <template lang="pug">
-label.input__pic(
-  :class="{ 'pic-error': !!errorText, filled: renderedPhoto.length }",
-  :style="{ backgroundImage: `url(${renderedPhoto})` }"
-)
-  p.input__pic-text Перетащите или загрузите для загрузки изображения.
-  p.input__pic-text Загружать файлы можно размером не более 1,5 Mb в фортмате 'jpg' или 'png'
-  appButton.input__pic-btn(
+.inputAvatar(:class="{ 'pic-error': !!errorText }")
+  .inputAvatar__pic(
+    :class="{ filled: renderedPhoto.length }",
+    :style="{ backgroundImage: `url(${renderedPhoto})` }"
+  )
+  appButton.inputAvatar__pic-btn(
+    plain,
     typeAttr="file",
     :title="renderedPhoto.length > 0 ? 'Изменить фото' : 'Добавить фото'",
     @change="handleFileChange",
     :value="value"
   )
-  tooltip.input__pic-tooltip(:text="errorText")
+  tooltip.inputAvatar__pic-tooltip(:text="errorText")
 </template>
 <script>
 import appButton from "../button";
@@ -23,7 +23,9 @@ export default {
   props: {
     value: {
       type: File | Object,
-      default: {},
+      default() {
+        return {};
+      },
     },
     errorMessage: {
       type: String,
@@ -39,6 +41,7 @@ export default {
       photo: this.value,
       renderedPhoto: "",
       errorText: this.errorMessage,
+      mode: "",
     };
   },
   watch: {
@@ -52,47 +55,72 @@ export default {
   },
   methods: {
     handleFileChange(event) {
-      this.photo = event.target.files[0];
+      const file = event.target.files[0];
+      this.photo = file;
       this.errorText = "";
 
       if (!this.validationPhoto(this.photo)) return;
 
-      renderImageFile(this.photo).then((resolve) => {
+      renderImageFile(file).then((resolve) => {
         this.renderedPhoto = resolve;
-        this.$emit("input", this.photo);
+        this.$emit("input", file);
       });
     },
     validationPhoto(file) {
       if (!file) return false; //пустой файл
       const size = file.size / 1024; //Kbyte
       const type = file.type.slice(6, file.type.length); // type: "image/png" избавляемся от image
-
+      
       if (1500 < size) {
         this.photo = this.value;
         this.errorText = "Файл больше 1.5 мегабайт.";
         return false;
       }
-
-      if (type != "png" && type != "jpg") {
+      /* 
+       При создание нового объекта, сервер принимает изображение только в png формате,
+       при редактирование уже существующего объекта, сервер принимает файлы и в png и в jpeg формате
+       т.к. принцип работы при добавлении и редактирование одинаковый, предполагаю что проблема на стороне сервера
+      */
+      if (this.mode == "edit") {
+        // проверка при редактирование существующего объекта
+        if (type != "png" && type != "jpeg") {
+          // проверка при создание нового объекта
+          this.photo = this.value;
+          this.errorText =
+            "Неверный тип файла, сервер принимает файл только в 'png' или 'jpg' формате";
+          return false;
+        }
+        return true;
+      }
+      
+      if (type != "png") {
+        // проверка при создание нового объекта
         this.photo = this.value;
-        this.errorText = "Неверный тип файла";
+        this.errorText =
+          "Неверный тип файла, сервер принимает файл только в 'png' формате";
         return false;
       }
+
       return true;
     },
     checkImage(imageFile) {
       this.renderedPhoto = "";
+      this.errorText = "";
 
       if (imageFile.size > 0) {
         //если получаем объект, т.е. фото добавлено пользователем
         renderImageFile(imageFile).then((resolve) => {
           this.renderedPhoto = resolve;
         });
+        return;
       }
       if (imageFile.length > 0) {
         // если строка, т.е. фото пришло с сервера
         this.renderedPhoto = getAbsoluteImgPath(imageFile);
+        this.mode = "edit";
+        return;
       }
+      this.mode = "";
     },
   },
   mounted() {
@@ -101,41 +129,54 @@ export default {
 };
 </script>
 <style lang="postcss" scoped>
-.input__pic {
-  width: 100%;
+.inputAvatar {
   display: flex;
   flex-direction: column;
-  background: #bccce3;
   align-items: center;
   justify-content: center;
-  padding: 20%;
-  text-align: center;
-  border-style: dashed;
-  border: 2px dashed grey;
-  cursor: pointer;
   position: relative;
-
-  background: center center/cover no-repeat;
-
-  p {
-    margin-bottom: 20px;
-    opacity: 0.6;
+}
+.inputAvatar__pic {
+  display: block;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  position: relative;
+  background: #cbd9ed;
+  &:before {
+    content: "";
+    height: 130px;
+    width: 110px;
+    background: svg-load(
+        "filled-user.svg",
+        fill=#fff,
+        stroke=#fff,
+        stroke-width=10
+      )
+      center center no-repeat;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
-
   &.filled {
-    p {
-      opacity: 0;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    &:before {
+      display: none;
     }
-    .input__pic-btn {
-      position: absolute;
-      bottom: -75px;
-    }
-
-    margin-bottom: 75px;
   }
 }
 
-.input__pic-tooltip {
+.inputAvatar__pic-btn {
+  position: absolute;
+  bottom: 0;
+  background: none;
+}
+
+.inputAvatar__pic-tooltip {
   display: none;
   position: absolute;
   bottom: -45px;
@@ -144,7 +185,7 @@ export default {
 .pic-error {
   border-color: $errors-color;
 
-  .input__pic-tooltip {
+  .inputAvatar__pic-tooltip {
     display: block;
   }
 }

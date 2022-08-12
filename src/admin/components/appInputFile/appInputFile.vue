@@ -4,7 +4,7 @@ label.input__pic(
   :style="{ backgroundImage: `url(${renderedPhoto})` }"
 )
   p.input__pic-text Перетащите или загрузите для загрузки изображения.
-  p.input__pic-text Загружать файлы можно размером не более 1,5 Mb в фортмате 'jpg' или 'png'
+  p.input__pic-text Загружать файлы можно размером не более 1,5 Mb в фортмате 'png'
   appButton.input__pic-btn(
     typeAttr="file",
     :title="renderedPhoto.length > 0 ? 'Изменить' : 'Загрузить'",
@@ -72,27 +72,52 @@ export default {
         this.errorText = "Файл больше 1.5 мегабайт.";
         return false;
       }
+      /* 
+       При создание нового объекта, сервер принимает изображение только в png формате,
+       при редактирование уже существующего объекта, сервер принимает файлы и в png и в jpeg формате
+       т.к. принцип работы при добавлении и редактирование одинаковый, предполагаю что проблема на стороне сервера
+      */
+      if (this.mode == "edit") {
+        // проверка при редактирование существующего объекта
+        if (type != "png" && type != "jpeg") {
+          // проверка при создание нового объекта
+          this.photo = this.value;
+          this.errorText =
+            "Неверный тип файла, сервер принимает файл только в 'png' или 'jpg' формате";
+          return false;
+        }
+        return true;
+      }
 
-      if (type != "png" && type != "jpg") {
+      if (type != "png") {
+        // проверка при создание нового объекта
         this.photo = this.value;
-        this.errorText = "Неверный тип файла";
+        this.errorText =
+          "Неверный тип файла, сервер принимает файл только в 'png' формате";
         return false;
       }
+
       return true;
     },
     checkImage(imageFile) {
       this.renderedPhoto = "";
+
+      this.errorText = "";
 
       if (imageFile.size > 0) {
         //если получаем объект, т.е. фото добавлено пользователем
         renderImageFile(imageFile).then((resolve) => {
           this.renderedPhoto = resolve;
         });
+        return;
       }
       if (imageFile.length > 0) {
         // если строка, т.е. фото пришло с сервера
         this.renderedPhoto = getAbsoluteImgPath(imageFile);
+        this.mode = "edit";
+        return;
       }
+      this.mode = "";
     },
   },
   mounted() {

@@ -22,40 +22,6 @@ export default {
     EDIT_WORK(state, editedWork) {
       state.works = state.works.map(work => work.id === editedWork.id ? editedWork : work)
     },
-    // ADD_SKILL(state, newSkill) {
-    //   state.categories = state.categories.map(category => {
-    //     if (category.id === newSkill.category) {
-    //       category.skills.push(newSkill);
-    //     }
-    //     return category
-    //   })
-    // },
-    // REMOVE_SKILL(state, skillToRemove) {
-    //   const findCategory = (category) => {
-    //     if (category.id === skillToRemove.category) {
-    //       removeSkillInCategory(category);
-    //     }
-    //     return category;
-    //   }
-    //   const removeSkillInCategory = (category) => {
-    //     category.skills = category.skills.filter(
-    //       (skill) => skill.id !== skillToRemove.id);
-    //   }
-    //   state.categories = state.categories.map(findCategory)
-    // },
-    // EDIT_SKILL(state, skillToEdit) {
-    //   const findCategory = (category) => {
-    //     if (category.id === skillToEdit.category) {
-    //       editSkillInCategory(category);
-    //     }
-    //     return category;
-    //   }
-    //   const editSkillInCategory = (category) => {
-    //     category.skills = category.skills.map(
-    //       (skill) => skill.id === skillToEdit.id ? skillToEdit : skill);
-    //   }
-    //   state.categories = state.categories.map(findCategory)
-    // }
   },
   actions: {
     async addWork({ commit }, newWork) {

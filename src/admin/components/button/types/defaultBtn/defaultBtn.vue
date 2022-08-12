@@ -6,7 +6,7 @@ button(
   :disabled="disabled"
 ) {{ title }}
 label.btn-file-container(v-else-if="typeAttr === 'file'")
-  .btn-file-fake.btn-decorator {{ title }}
+  .btn-file-fake.btn-decorator(:class="[{ disabled }, { plain }]") {{ title }}
   input.btn-file-input(type="file", v-on="$listeners")
 </template>
 <script>

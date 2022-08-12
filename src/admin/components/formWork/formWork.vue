@@ -1,5 +1,6 @@
 <template lang="pug">
 .addwork-form
+  pre {{ currentWork.photo }}
   h2.addwork-form__title(v-if="mode == 'edit'") Редактирование работы
   h2.addwork-form__title(v-else) Добавление новой работы
   .addwork
@@ -40,7 +41,7 @@
           :errorMessage="validation.firstError('currentWork.techs')"
         )
       .addwork__btn
-        appButton(plain, title="Отменить", @click="$emit('closeAddWork')")
+        appButton(plain, title="Отменить", @click="$emit('close')")
         appButton(
           v-if="mode == 'edit'",
           title="Сохранить",
@@ -52,9 +53,8 @@
 import appInputFile from "../appInputFile";
 import appInput from "../input";
 import addTags from "../addTags";
-import appButton from "./../button";
+import appButton from "../button";
 import { Validator } from "simple-vue-validator";
-import { mapActions } from "vuex";
 
 export default {
   mixins: [require("simple-vue-validator").mixin],
@@ -133,30 +133,18 @@ export default {
     },
   },
   methods: {
-    ...mapActions("works", ["addWork", "editWork"]),
-    async createNewWork() {
+    createNewWork() {
       this.$validate();
       if (this.validation.hasError()) return;
 
-      try {
-        await this.addWork(this.currentWork);
-        this.validation.reset();
-        this.$emit("createAddWork");
-      } catch (error) {
-        console.log(error);
-      }
+      this.$emit("create", this.currentWork);
+      this.validation.reset();
     },
-    async editCurrentWork() {
+    editCurrentWork() {
       this.$validate();
       if (this.validation.hasError()) return;
-
-      try {
-        await this.editWork(this.currentWork);
-        this.validation.reset();
-        this.$emit("editAddWork");
-      } catch (error) {
-        console.log(error);
-      }
+      this.$emit("edit", this.currentWork);
+      this.validation.reset();
     },
     checkMode() {
       if (this.mode == "edit") {

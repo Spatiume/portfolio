@@ -1,11 +1,21 @@
 .inner-tooltip-container {
   padding: 22px;
   background: #4bb133;
-  min-width: 400px;
-  position: relative;
-  display: flex;
+  // min-width: 400px;
   justify-content: space-between;
   color: #fff;
+  opacity: 1;
+  position: fixed;
+  bottom: 0;
+  width: 80%;
+  bottom: 0;
+  left: 10%;
+  display: flex;
+
+  &.success {
+    transition: 8s;
+    opacity: 0;
+  }
 
   &.warning {
     background: #b18333;
@@ -15,6 +25,7 @@
     background: #b13333;
   }
 }
+
 
 .tooltip__close {
   width: 20px;
