@@ -1,3 +1,6 @@
+@import "./../../../styles/mixins.pcss";
+
+
 .tabs-component {
   display: flex;
   background: white;
@@ -10,6 +13,11 @@
 
 .tabs-item {
   margin-right: 20px;
+
+  
+  @include phones {
+    margin-right: 2%;
+  }
 }
 
 .btn {
@@ -17,6 +25,7 @@
   padding: 20px;
   background: inherit;
   position: relative;
+  white-space: nowrap;
 
   &.active {
     &:before {
@@ -29,6 +38,11 @@
       height: 3px;
       background: #454573;
     }
+  }
+
+
+  @include phones {
+    padding: 20px 10px;
   }
 
   // flex: 1;

@@ -26,8 +26,11 @@ import work from "./../components/work";
 import squareBtn from "./../components/button/types/squareBtn";
 import formWork from "./../components/formWork";
 import { mapActions, mapState } from "vuex";
+import addNotification from "./../mixins/addNotification";
 
 export default {
+  mixins: [addNotification],
+
   components: { work, squareBtn, formWork },
   data() {
     return {
@@ -49,19 +52,14 @@ export default {
       this.mode = "";
       this.workToEdit = {};
     },
-    ...mapActions("works", [
-      "addWork",
-      "editWork",
-      "fetchWorks",
-      "removeWork",
-    ]),
+    ...mapActions("works", ["addWork", "editWork", "fetchWorks", "removeWork"]),
     async createNewWork(newWork) {
-      console.log(newWork);
       try {
         await this.addWork(newWork);
         this.mode = "";
+        this.addNotification("Работа успешно добавлена");
       } catch (error) {
-        console.log(error);
+        this.addNotification(error.message, "error");
       }
     },
     async editCurrentWork(editedWork) {
@@ -69,15 +67,17 @@ export default {
         await this.editWork(editedWork);
         this.mode = "";
         this.workToEdit = {};
+        this.addNotification("Работа успешно обновлена");
       } catch (error) {
-        console.log(error);
+        this.addNotification(error.message, "error");
       }
     },
     async removeCurrentWork(workToRemoveId) {
       try {
         await this.removeWork(workToRemoveId);
+        this.addNotification("Работа успешно удалена");
       } catch (error) {
-        console.log(error);
+        this.addNotification(error.message, "error");
       }
     },
   },

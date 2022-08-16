@@ -14,6 +14,8 @@ export default {
       state.categories = categories;
     },
     ADD_CATEGORY(state, newCategory) {
+      newCategory = { ...newCategory, ...{ skills: [] } };
+      // в ответе от сервера приходит объект без скиллов, поэтому добавляем его самостоятельно
       state.categories.unshift(newCategory);
     },
     REMOVE_CATEGORY(state, categoryToRemoveId) {
@@ -70,7 +72,6 @@ export default {
       try {
         const { data } = await this.$axios.get(`/categories/${state.userData.id}`)
         commit("SET_CATEGORIES", data);
-        console.log("update categories : ", data);
       } catch (error) {
         throw new Error(this.generateStdError(error))
       }

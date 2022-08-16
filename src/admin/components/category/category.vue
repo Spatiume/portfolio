@@ -22,9 +22,10 @@ import skillAddLine from "./../skillAddLine";
 
 import { mapActions } from "vuex";
 import { Validator } from "simple-vue-validator";
+import addNotification from "../../mixins/addNotification";
 
 export default {
-  mixins: [require("simple-vue-validator").mixin],
+  mixins: [require("simple-vue-validator").mixin, addNotification],
   validators: {
     "editedCategory.category"(value) {
       return Validator.value(value).required("Поле не может быть пустым");
@@ -53,10 +54,11 @@ export default {
       if (this.validation.hasError()) return;
       try {
         await this.editCategoryTitle(this.editedCategory);
+        this.editedCategory = { ...this.category };
+        this.addNotification("Категория успешно обновлена");
       } catch (error) {
-        alert(error);
+        this.addNotification(error.message, "error");
       }
-      this.editedCategory = { ...this.category };
     },
     cancelEditCategory() {
       this.editedCategory = { ...this.category };
@@ -64,8 +66,9 @@ export default {
     async removeCategoryById() {
       try {
         await this.removeCategory(this.category.id);
+        this.addNotification("Категория успешно удалена");
       } catch (error) {
-        alert(error);
+        this.addNotification(error.message, "error");
       }
     },
   },

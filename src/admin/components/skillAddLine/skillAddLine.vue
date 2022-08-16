@@ -22,13 +22,14 @@ form.skillAddLine-component(@submit.prevent="addNewSkill")
 <script>
 import appInput from "./../input";
 import iconedBtn from "./../button/types/iconedBtn";
+import addNotification from "../../mixins/addNotification";
 
 import { mapActions } from "vuex";
 
 import { Validator } from "simple-vue-validator";
 
 export default {
-  mixins: [require("simple-vue-validator").mixin],
+  mixins: [require("simple-vue-validator").mixin, addNotification],
   validators: {
     "skill.title"(value) {
       return Validator.value(value).required("Поле не может быть пустым");
@@ -60,9 +61,6 @@ export default {
     ...mapActions("categories", ["fetchCategories"]),
 
     async addNewSkill() {
-      // this.$validate().then((success) => {
-      //   if (!success) return;
-      // });
       this.$validate();
       if (this.validation.hasError()) return;
 
@@ -72,6 +70,7 @@ export default {
       };
       try {
         await this.addSkill(newSkill);
+        
         //очищаем форму и валидатор
         this.skill = {
           title: "",
@@ -80,15 +79,10 @@ export default {
         this.validation.reset();
         //делаем фокус на input при добавлении нового skill
         this.focusInput();
-        /* ОБНОВЛЯЕМ ВСЕ КАТЕГОРИИ, вот почему:
-        поле id у skill присваивается на сервере
-        в случае если после создания skill мы захотим удалить или изменить его,
-        нам нужно будет поле id, которая генерируется на сервере
-        возможности загрузить отдельно skill не предусмотренно
-        поэтому мы обновляем всю категорию   */
-        this.fetchCategories();
+        this.addNotification("Скилл успешно добавлен");
+        
       } catch (error) {
-        alert(error);
+        this.addNotification(error.message, "error");
       }
     },
     focusInput() {

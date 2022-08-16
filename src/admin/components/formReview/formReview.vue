@@ -220,6 +220,16 @@ export default {
   .addreview__author {
     margin-right: 20px;
   }
+
+  @include phones {
+    flex-direction: column;
+    div {
+      margin-bottom: 10px;
+    }
+    .addreview__author {
+      margin-right: 0px;
+    }
+  }
 }
 
 .addreview__form-row,
@@ -230,5 +240,9 @@ export default {
 .addreview__btn {
   display: flex;
   justify-content: flex-end;
+
+  @include phones {
+    flex-direction: column;
+  }
 }
 </style>

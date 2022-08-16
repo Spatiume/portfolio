@@ -13,8 +13,9 @@
   display: flex;
 
   &.success {
-    transition: 8s;
-    opacity: 0;
+
+    z-index: -100;
+    animation: hideBlockSuccess 3s ease-in-out;
   }
 
   &.warning {
@@ -33,4 +34,23 @@
   background: svg-load('cross.svg', fill=#fff) center center no-repeat;
   cursor: pointer;
   margin-left: 20px;
+}
+
+@keyframes hideBlockSuccess {
+  0% {
+    display: flex;
+    opacity: 1;
+    z-index: 100;
+  }
+
+  99% {
+    opacity: 0.01;
+    z-index: 100;
+  }
+
+  100% {
+    display: none;
+    opacity: 0;
+    z-index: -100;
+  }
 }

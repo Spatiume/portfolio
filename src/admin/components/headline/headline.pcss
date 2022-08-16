@@ -1,12 +1,22 @@
+@import "./../../../styles/mixins.pcss";
+
+
 .headline-component {
   background: linear-gradient(to top, #3e3e59, #454573);
   display: flex;
   align-items: center;
   padding: 20px;
   color: white;
+  position: relative;
+
+  @include phones {
+    padding-top: 46px;
+
+  }
 }
 
 .content {
+
   :last-child {
     margin-right: 16px;
   }
@@ -16,6 +26,20 @@
   text-align: center;
   flex: 1;
   padding-right: 5%;
+  white-space: nowrap;
+
+  @include tablets {
+    padding-right: 3%;
+  }
+
+  @include phones {
+    padding: 0;
+    position: absolute;
+    top: 10px;
+    border-bottom: 1px solid white;
+    width: 90%;
+    padding-bottom: 2px;
+  }
 }
 
 .logout {

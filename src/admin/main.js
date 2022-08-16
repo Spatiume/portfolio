@@ -15,6 +15,7 @@ directives.forEach(directive => {
   Vue.directive(directive.name, directive)
 })
 
+
 store.$axios = $axios;
 store.generateStdError = generateStdError;
 

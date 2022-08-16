@@ -35,6 +35,7 @@ export default {
         const { data } = await this.$axios.post("/reviews", formData);
         commit("ADD_REVIEW", data);
       } catch (error) {
+
         throw new Error(this.generateStdError(error))
       }
     },
@@ -42,7 +43,7 @@ export default {
       try {
         const { data } = await this.$axios.get(`/reviews/${state.userData.id}`)
         commit("SET_REVIEWS", data);
-        console.log("update reviews : ", data);
+        // console.log("update reviews : ", data);
       } catch (error) {
         throw new Error(this.generateStdError(error))
       }

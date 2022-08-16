@@ -1,6 +1,5 @@
 <template lang="pug">
 .addwork-form
-  pre {{ currentWork.photo }}
   h2.addwork-form__title(v-if="mode == 'edit'") Редактирование работы
   h2.addwork-form__title(v-else) Добавление новой работы
   .addwork
@@ -230,5 +229,9 @@ export default {
 .addwork__btn {
   display: flex;
   justify-content: flex-end;
+
+  @include phones {
+    flex-direction: column;
+  }
 }
 </style>

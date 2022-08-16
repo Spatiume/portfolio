@@ -53,9 +53,10 @@ import icon from "./../icon";
 import appInput from "./../input";
 import { mapActions } from "vuex";
 import { Validator } from "simple-vue-validator";
+import addNotification from "../../mixins/addNotification";
 
 export default {
-  mixins: [require("simple-vue-validator").mixin],
+  mixins: [require("simple-vue-validator").mixin, addNotification],
   validators: {
     "editedSkill.title"(value) {
       return Validator.value(value).required("Поле не может быть пустым");
@@ -98,16 +99,18 @@ export default {
       try {
         await this.editSkill(this.editedSkill);
         this.editedSkill = { ...this.skill };
+        this.addNotification("Скилл успешно изменен");
       } catch (error) {
-        alert(error);
+        this.addNotification(error.message, "error");
       }
       this.editMode = false;
     },
     async skillRemove() {
       try {
         await this.removeSkill(this.skill);
+        this.addNotification("Скилл успешно удален");
       } catch (error) {
-        alert(error);
+        this.addNotification(error.message, "error");
       }
     },
     focusInput() {

@@ -20,6 +20,7 @@ export const generateStdError = errorObj => {
         throw new Error("Токен авторизации не предоставлен");
 
       case "token_expired":
+        console.log(errorResponseObject.error);
         throw new Error("Токен авторизации просрочен");
       default:
         console.error(errorResponseObject);

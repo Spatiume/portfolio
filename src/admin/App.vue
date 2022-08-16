@@ -13,6 +13,7 @@
 
     main.content-container
       router-view
+  notification
 </template> 
 
 <script>
@@ -22,6 +23,7 @@ import user from "./components/user";
 import avatar from "./components/avatar";
 import category from "./components/category";
 import button from "./components/button";
+import notification from "./components/notification";
 
 export default {
   components: {
@@ -30,6 +32,7 @@ export default {
     user,
     avatar,
     category,
+    notification,
     iconedButton: button,
   },
   data() {
@@ -39,8 +42,7 @@ export default {
     };
   },
   methods: {},
-  created() {
-  },
+  created() {},
 };
 </script>
 

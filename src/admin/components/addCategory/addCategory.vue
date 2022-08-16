@@ -20,9 +20,10 @@ import skillAddLine from "../skillAddLine";
 
 import { mapActions } from "vuex";
 import { Validator } from "simple-vue-validator";
+import addNotification from "../../mixins/addNotification";
 
 export default {
-  mixins: [require("simple-vue-validator").mixin],
+  mixins: [require("simple-vue-validator").mixin, addNotification],
   validators: {
     newCategoryTitle(value) {
       return Validator.value(value).required("Поле не может быть пустым");
@@ -44,11 +45,11 @@ export default {
       try {
         await this.addCategory(this.newCategoryTitle);
 
-        //
-        this.fetchCategories();
+        this.addNotification("Категория успешно добавлена");
       } catch (error) {
-        alert(error.message);
+        this.addNotification(error.message, "error");
       }
+
       this.newCategoryTitle = "";
       this.$emit("createNewCategory");
     },

@@ -70,7 +70,7 @@ export default {
       if (!file) return false; //пустой файл
       const size = file.size / 1024; //Kbyte
       const type = file.type.slice(6, file.type.length); // type: "image/png" избавляемся от image
-      
+
       if (1500 < size) {
         this.photo = this.value;
         this.errorText = "Файл больше 1.5 мегабайт.";
@@ -92,7 +92,7 @@ export default {
         }
         return true;
       }
-      
+
       if (type != "png") {
         // проверка при создание нового объекта
         this.photo = this.value;

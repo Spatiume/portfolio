@@ -2,7 +2,6 @@
 .reviews-page-component
   .reviews-page-header
     h1.section-title Блок &#171Отзывы&#187
-  input(type="input", v-model="notification.text")
   formReview(
     v-if="mode == 'edit' || mode == 'create'",
     :mode="mode",
@@ -12,7 +11,11 @@
     @edit="editCurrentReview"
   )
   .reviews__list
-    squareBtn.reviews__item(@click="(mode = 'create'), (reviewToEdit = {})")
+    squareBtn.reviews__item(
+      @click="(mode = 'create'), (reviewToEdit = {})",
+      title="Добавить отзыв",
+      v-show="mode != 'create'"
+    )
     .reviews__item(v-for="review in reviews", :key="review.id")
       review(
         :review="review",
@@ -20,12 +23,6 @@
         @remove="removeCurrentReview",
         :class="{ 'disabled-current-item': review.id == reviewToEdit.id }"
       )
-  notification(
-    v-if="notification.text"
-    :text="notification.text",
-    @click="clearNotification",
-    :type="notification.type"
-  )
 </template>
 
 <script>
@@ -33,18 +30,14 @@ import review from "./../components/review";
 import squareBtn from "./../components/button/types/squareBtn";
 import formReview from "./../components/formReview";
 import { mapActions, mapState } from "vuex";
-import notification from "./../components/notification";
-
+import addNotification from "./../mixins/addNotification";
 export default {
-  components: { review, squareBtn, formReview, notification },
+  mixins: [addNotification],
+  components: { review, squareBtn, formReview },
   data() {
     return {
       mode: "",
       reviewToEdit: {},
-      notification: {
-        text: "",
-        type: "success",
-      },
     };
   },
   computed: {
@@ -61,10 +54,6 @@ export default {
       this.mode = "";
       this.reviewToEdit = {};
     },
-    clearNotification() {
-      this.notification.text = "";
-      this.notification.type = "";
-    },
     ...mapActions("reviews", [
       "addReview",
       "editReview",
@@ -75,9 +64,9 @@ export default {
       try {
         await this.addReview(newReview);
         this.mode = "";
-        this.notification.text = "Отзыв успешно добавлен";
+        this.addNotification("Отзыв успешно добавлен");
       } catch (error) {
-        console.log(error);
+        this.addNotification(error.message, "error");
       }
     },
     async editCurrentReview(editedReview) {
@@ -85,17 +74,17 @@ export default {
         await this.editReview(editedReview);
         this.mode = "";
         this.reviewToEdit = {};
-        this.notification.text = "Отзыв успешно обновлен";
+        this.addNotification("Отзыв успешно обновлен");
       } catch (error) {
-        console.log(error);
+        this.addNotification(error.message, "error");
       }
     },
     async removeCurrentReview(reviewToRemoveId) {
       try {
         await this.removeReview(reviewToRemoveId);
-        this.notification.text = "Отзыв успешно удален";
+        this.addNotification("Отзыв успешно удален");
       } catch (error) {
-        console.log(error);
+        this.addNotification(error.message, "error");
       }
     },
   },

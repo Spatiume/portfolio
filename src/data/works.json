@@ -2,7 +2,7 @@
   {
     "id": 1,
     "title": "Сайт BURGERS",
-    "techs": "HTML, SCSS, JavaScript, jQuery, Gulp",
+    "skills": "HTML, SCSS, JavaScript, jQuery, Gulp",
     "photo": "slider-1.jpg",
     "link": "https://spatiume.github.io/burgers/",
     "description": "Сайт был разработан для практического применения изученных навыков в ходе обучения. Сайт был разработан по макету и конкретному заданию. "
@@ -10,7 +10,7 @@
   {
     "id": 2,
     "title": "Сайт PORTFOLIO",
-    "techs": "Pug, PCSS, Vue, Webpack",
+    "skills": "Pug, PCSS, Vue, Webpack",
     "photo": "slider-2.jpg",
     "link": "//yandex.ru",
     "description": "Сайт был разработан для практического применения изученных навыков в ходе обучения. Сайт был разработан по макету и конкретному заданию. "
@@ -18,7 +18,7 @@
   {
     "id": 3,
     "title": "Future project",
-    "techs": "HTML, CSS, JavaScript",
+    "skills": "HTML, CSS, JavaScript",
     "photo": "slider-3.jpg",
     "link": "//rambler.ru",
     "description": "Здесь будут мои будущие проекты. Здесь будут мои будущие проекты. Здесь будут мои будущие проекты. Здесь будут мои будущие проекты.Здесь будут мои будущие проекты."

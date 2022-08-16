@@ -1,7 +1,8 @@
 <template lang="pug">
 section.about-page-component
+  notification
   .about-page-header
-    h1.section-title Блок &#171Обо мне&#187 
+    h1.section-title Блок &#171Обо мне&#187
     roundBtn.btn-newcategory(
       type="iconed",
       @click="showFormCategory = true",
@@ -22,10 +23,11 @@ section.about-page-component
 import category from "./../components/category";
 import roundBtn from "./../components/button";
 import addCategory from "./../components/addCategory";
+import notification from "./../components/notification";
 
 import { mapActions, mapState } from "vuex";
 export default {
-  components: { category, roundBtn, addCategory },
+  components: { category, roundBtn, addCategory, notification },
   data() {
     return {
       category: {
@@ -56,18 +58,30 @@ export default {
   display: flex;
 }
 
-
-
 .about-page-header {
   display: flex;
   align-items: center;
   padding: 3% 2%;
+  white-space: nowrap;
   .section-title {
     margin-right: 20px;
   }
 
   .btn-newcategory {
     padding-top: 5px;
+  }
+
+  @include phones {
+    align-items: flex-start;
+    flex-direction: column;
+
+    .section-title {
+      margin-bottom: 10px;
+    }
+
+    .btn-newcategory {
+      padding-top: 0;
+    }
   }
 }
 .categories-list {

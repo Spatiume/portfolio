@@ -41,7 +41,7 @@ export default {
       try {
         const { data } = await this.$axios.get(`/works/${state.userData.id}`)
         commit("SET_WORKS", data);
-        console.log("update works : ", data);
+        // console.log("update works : ", data);
       } catch (error) {
         throw new Error(this.generateStdError(error))
       }
@@ -64,7 +64,6 @@ export default {
 
       try {
         const { data } = await this.$axios.post(`/works/${editedWork.id}`, formData);
-        console.log(data);
         commit("EDIT_WORK", data.work);
       } catch (error) {
         throw new Error(this.generateStdError(error));
