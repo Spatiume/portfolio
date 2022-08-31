@@ -1,17 +1,30 @@
 import Vue from "vue";
+import axios from "axios";
+
+const requests = axios.create({
+  baseURL: "https://webdev-api.loftschool.com",
+});
+const baseURL = "https://webdev-api.loftschool.com";
+const userId = 13;
 
 const btns = {
   template: "#slider-btns",
 };
 const thumbs = {
   template: "#slider-thumbs",
-  props: ["works", "currentWork"],
+  props: ["works", "currentWork", "worksForThumbs"],
+  computed: {
+    reversedWorks() {
+      const works = [...this.worksForThumbs];
+      return works.reverse();
+    }
+  }
 };
 
 const display = {
   template: "#slider-display",
   components: { thumbs, btns },
-  props: ["currentWork", "works", "currentIndex"],
+  props: ["currentWork", "works", "currentIndex", "worksForThumbs"],
   computed: {
     reversedWorks() {
       const works = [...this.works];
@@ -28,12 +41,15 @@ const tags = {
 const info = {
   template: "#slider-info",
   components: { tags },
-  props: ["currentWork"],
+  props: ["currentWork", "isLoading"],
   computed: {
     tagsArray() {
-      return this.currentWork.skills.split(",");
+      return this.currentWork.techs.split(",");
     }
-  }
+  },
+  created() {
+    // console.log(this.currentWork);
+  },
 };
 
 new Vue({
@@ -44,12 +60,28 @@ new Vue({
     return {
       works: [],
       currentIndex: 0,
+      isLoading: false,
     };
   },
   computed: {
     currentWork() {
       return this.works[this.currentIndex];
     },
+    worksWithId() {
+      return this.works.map((item, index) => {
+        item.id = index
+        return item;
+      });
+    },
+    worksForThumbs() {
+      let minIndex = 0;
+      let maxIndex = 3;
+      if (this.currentIndex > 2) {
+        minIndex = this.currentIndex - 2;
+        return this.worksWithId.slice(minIndex, this.currentIndex + 1)
+      }
+      return this.worksWithId.slice(minIndex, maxIndex);
+    }
   },
   watch: {
     currentIndex(value) {
@@ -58,7 +90,7 @@ new Vue({
   },
   methods: {
     changeSlideByThumbs(newIndex) {
-      const newCurrentIndex = newIndex -1;
+      const newCurrentIndex = newIndex;
       this.currentIndex = newCurrentIndex;
     },
     makeInfiniteLoopForIndex(value) {
@@ -87,9 +119,27 @@ new Vue({
         return item;
       });
     },
+    makeArrWithAbsoluteImgPath(array) {
+      return array.map((item) => {
+        item.photo = `${baseURL}/${item.photo}`;
+        return item;
+      })
+    }
   },
-  created() {
-    const data = require("../data/works.json");
-    this.works = this.makeArrWithRequireImages(data);
-  },
+
+  async mounted() {
+    this.isLoading = false;
+    try {
+      const { data } = await requests.get(`/works/${userId}`);
+      this.works = this.makeArrWithAbsoluteImgPath(data);
+      this.isLoading = true;
+      console.log(this.works);
+    } catch (error) {
+      //если сервер прислал ошибку, то возьмем свои данные 
+      const data = require("../data/works.json");
+      this.works = this.makeArrWithRequireImages(data);
+      console.log(error);
+      this.isLoading = true;
+    }
+  }
 });

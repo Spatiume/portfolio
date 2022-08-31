@@ -2,20 +2,14 @@ export default {
   namespaced: true,
   state: {
     categories: [],
-    userData: {
-      id: 13,
-    }
   },
   mutations: {
-    SET_USERDATA(state, userData) {
-      state.userData = userData;
-    },
     SET_CATEGORIES(state, categories) {
       state.categories = categories;
     },
     ADD_CATEGORY(state, newCategory) {
       newCategory = { ...newCategory, ...{ skills: [] } };
-      // в ответе от сервера приходит объект без скиллов, поэтому добавляем его самостоятельно
+      // в ответе от сервера приходит объект без поля скиллов, поэтому добавляем его самостоятельно
       state.categories.unshift(newCategory);
     },
     REMOVE_CATEGORY(state, categoryToRemoveId) {
@@ -59,6 +53,11 @@ export default {
       state.categories = state.categories.map(findCategory)
     }
   },
+  getters: {
+    userId(state, getters, rootState, rootGetters) {
+      return rootGetters["user/getUserId"];
+    }
+  },
   actions: {
     async addCategory({ commit }, title) {
       try {
@@ -68,9 +67,10 @@ export default {
         throw new Error(this.generateStdError(error))
       }
     },
-    async fetchCategories({ commit, state }) {
+    async fetchCategories({ commit, getters }) {
+      const userId = getters.userId;
       try {
-        const { data } = await this.$axios.get(`/categories/${state.userData.id}`)
+        const { data } = await this.$axios.get(`/categories/${userId}`)
         commit("SET_CATEGORIES", data);
       } catch (error) {
         throw new Error(this.generateStdError(error))
@@ -94,5 +94,5 @@ export default {
     }
 
   },
-  getters: {},
+
 };

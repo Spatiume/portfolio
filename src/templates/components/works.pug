@@ -1,15 +1,17 @@
 script(type="text/x-template")#slider-container
-  .works-slider
+  .works-slider(v-if="isLoading")
     display(
       :currentWork="currentWork"
       :works="works"
       :currentIndex="currentIndex"
       @slide="handleSlide"
       @changeSlideByThumbs="changeSlideByThumbs"
+      :worksForThumbs="worksForThumbs"
     )
     info(
       :currentWork="currentWork"
     )
+
 
 script(type="text/x-template")#slider-display
   .works-slider__pics(:data-slide="currentIndex + 1")
@@ -17,14 +19,14 @@ script(type="text/x-template")#slider-display
       .works-slider__fullpic-container
         img(:src="currentWork.photo").works-slider__fullpic
         btns(
-          @slide="$emit('slide', $event)"
+          @slide="$emit('slide', $event)" 
         )
         thumbs(
+          :worksForThumbs="worksForThumbs"
           :works="reversedWorks"
           :currentWork="currentWork"
           :currentIndex="currentIndex"
-          @changeSlideByThumbs="$emit('changeSlideByThumbs', $event)"
-
+          @changeSlideByThumbs="$emit('changeSlideByThumbs', $event)" 
         )
 
 script(type="text/x-template")#slider-btns
@@ -35,7 +37,7 @@ script(type="text/x-template")#slider-btns
 script(type="text/x-template")#slider-thumbs
   ul.works-slider__thumbs
     li.works-slider__thumb-item(
-      v-for="work in works" 
+      v-for="work in reversedWorks" 
       :key="work.id"
       :class="{active: currentWork.id === work.id}"
     )
@@ -43,13 +45,14 @@ script(type="text/x-template")#slider-thumbs
         img(:src="work.photo").works-slider__thumb
 
 script(type="text/x-template")#slider-info
+
   .works-slider__data
     tags(
       :tags="tagsArray"
     )
     .works-slider__title {{currentWork.title}}
     .works-slider__desc
-      p {{currentWork.desc}}
+      p {{currentWork.description}}
     .works-slider__link 
       a(:href="currentWork.link" target="_blank").iconed-link Посмотреть сайт
 

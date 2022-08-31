@@ -17,8 +17,7 @@
 </template>
 
 <script>
-import $axios from "./../requests";
-import { mapMutations } from "vuex";
+import axios from "./../requests";
 
 export default {
   components: { appInput: () => import("./../components/input") },
@@ -32,25 +31,14 @@ export default {
     };
   },
   methods: {
-    ...mapMutations("categories",["SET_USERDATA"]),
     async loginUser() {
       try {
-        const response = await $axios.post("/login", this.user);
+        const response = await axios.post("/login", this.user);
         const token = response.data.token;
         localStorage.setItem("token", token);
-        $axios.defaults.headers["Authorization"] = `Bearer ${token}`;
+        axios.defaults.headers["Authorization"] = `Bearer ${token}`;
 
-        this.getUserInfo();
         this.$router.replace("/");
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async getUserInfo() {
-      try {
-        const {data} = await $axios.get("/user");
-        this.SET_USERDATA(data.user); 
-
       } catch (error) {
         console.log(error);
       }
@@ -70,7 +58,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background: url("~images/bg/admin.jpg") center center / cover no-repeat; */
+  background: url("./../../images/bg/admin.jpg") center center / cover no-repeat;
+
   &:before {
     content: "";
     position: absolute;
@@ -78,7 +67,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    opacity: 0.5;
+    opacity: 0.35;
     background: $text-color;
   }
 }

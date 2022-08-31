@@ -2,14 +2,8 @@ export default {
   namespaced: true,
   state: {
     works: [],
-    userData: {
-      id: 13,
-    }
   },
   mutations: {
-    SET_USERDATA(state, userData) {
-      state.userData = userData;
-    },
     SET_WORKS(state, works) {
       state.works = works;
     },
@@ -37,9 +31,10 @@ export default {
         throw new Error(this.generateStdError(error))
       }
     },
-    async fetchWorks({ commit, state }) {
+    async fetchWorks({ commit, getters }) {
+      const userId = getters.userId;
       try {
-        const { data } = await this.$axios.get(`/works/${state.userData.id}`)
+        const { data } = await this.$axios.get(`/works/${userId}`)
         commit("SET_WORKS", data);
         // console.log("update works : ", data);
       } catch (error) {
@@ -71,5 +66,9 @@ export default {
     }
 
   },
-  getters: {},
+  getters: {
+    userId(state, getters, rootState, rootGetters) {
+      return rootGetters["user/getUserId"];
+    }
+  },
 };

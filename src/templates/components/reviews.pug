@@ -1,5 +1,5 @@
 script(type="text/x-tamplate")#reviews-slider
-  .reviews-slider
+  .reviews-slider(v-if="isLoading")
     btns(
       @handleSlide="handleSlide"
       :currentIndex="currentIndex"
@@ -34,7 +34,7 @@ script(type="text/x-tamplate")#review
     p.review__text {{review.text}}
     .review__user
       .review__user-pic
-        img(:src="review.authorPic").review__user-pic-fullalt
+        img(:src="review.photo").review__user-pic-fullalt
       .review__user-info
-        .review__user-name {{review.authorName}}
-        .review__user-position {{review.authorPos}}
+        .review__user-name {{review.author}}
+        .review__user-position {{review.occ}}

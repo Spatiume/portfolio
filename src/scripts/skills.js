@@ -1,4 +1,11 @@
 import Vue from 'vue';
+import axios from "axios";
+
+const requests = axios.create({
+  baseURL: "https://webdev-api.loftschool.com/",
+});
+
+const userId = 13;
 
 const skill = {
   template: "#skill",
@@ -39,8 +46,16 @@ new Vue({
       skills: []
     }
   },
-  created() {
-    const data = require("../data/skills.json");
-    this.skills = data;
+  async created() {
+    try {
+      const { data } = await requests.get(`/categories/${userId}`);
+      this.skills = data;
+    } catch (error) {
+      //если сервер прислал ошибку, то возьмем свои данные 
+
+      const data = require("../data/skills.json");
+      this.skills = data;
+    }
   }
+
 });

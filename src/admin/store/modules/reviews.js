@@ -2,14 +2,8 @@ export default {
   namespaced: true,
   state: {
     reviews: [],
-    userData: {
-      id: 13,
-    }
   },
   mutations: {
-    SET_USERDATA(state, userData) {
-      state.userData = userData;
-    },
     SET_REVIEWS(state, reviews) {
       state.reviews = reviews;
     },
@@ -39,9 +33,11 @@ export default {
         throw new Error(this.generateStdError(error))
       }
     },
-    async fetchReviews({ commit, state }) {
+    async fetchReviews({ commit, getters }) {
+      const userId = getters.userId;
+
       try {
-        const { data } = await this.$axios.get(`/reviews/${state.userData.id}`)
+        const { data } = await this.$axios.get(`/reviews/${userId}`)
         commit("SET_REVIEWS", data);
         // console.log("update reviews : ", data);
       } catch (error) {
@@ -73,5 +69,9 @@ export default {
     }
 
   },
-  getters: {},
+  getters: {
+    userId(state, getters, rootState, rootGetters) {
+      return rootGetters["user/getUserId"];
+    }
+  },
 };
